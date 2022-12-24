@@ -99,7 +99,7 @@ bool setBlocks( Block* blocks[] )
 			
 			// lava
 			gBlockClips[ BLOCK_LAVA ].x = 0;
-			gBlockClips[ BLOCK_LAVA ].y = 180;
+			gBlockClips[ BLOCK_LAVA ].y = 240;
 			gBlockClips[ BLOCK_LAVA ].w = BLOCK_WIDTH;
 			gBlockClips[ BLOCK_LAVA ].h = BLOCK_HEIGHT;
 		}
@@ -199,7 +199,7 @@ bool loadMediaRight()
 	bool success = true;
 
 	//Load dot texture
-	if(!gDotTexture.loadFromFile( "26_motion/square-1.jpg" ) )
+	if(!gDotTexture.loadFromFile( "39_tiling/square-1.jpg" ) )
 	{
 		printf( "Failed to load dot texture!\n" );
 		success = false;
@@ -214,7 +214,7 @@ bool loadMediaLeft()
 	bool success = true;
 
 	//Load dot texture
-	if(!gDotTexture.loadFromFile( "26_motion/square-2.jpg" ) )
+	if(!gDotTexture.loadFromFile( "39_tiling/square-2.jpg" ) )
 	{
 		printf( "Failed to load dot texture!\n" );
 		success = false;
@@ -229,7 +229,7 @@ bool loadMediaTouchWall()
 	bool success = true;
 
 	//Load dot texture
-	if(!gDotTexture.loadFromFile( "26_motion/square-3.jpg" ) )
+	if(!gDotTexture.loadFromFile( "39_tiling/square-3.jpg" ) )
 	{
 		printf( "Failed to load dot texture!\n" );
 		success = false;

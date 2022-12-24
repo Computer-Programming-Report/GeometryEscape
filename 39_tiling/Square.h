@@ -34,7 +34,7 @@ class Dot
 		void render( SDL_Rect& camera );
 		
 		// 是否在空中 
-		bool isjump = false;
+		bool isjump;
 
     private:
 		//Collision box of the dot

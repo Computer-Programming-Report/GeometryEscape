@@ -2,7 +2,7 @@
 extern LTexture gDotTexture; // get Square texture 
 extern int backgroundOffset_x;
 extern int backgroundOffset_y;
-Dot::Dot()
+Dot::Dot() : isjump(false)
 {
     //Initialize the collision box
     mBox.x = 300;
