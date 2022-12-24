@@ -9,6 +9,9 @@ bool init();
 
 //Loads media
 bool loadMedia( Block* blocks[] );
+bool loadMediaRight();
+bool loadMediaLeft();
+bool loadMediaTouchWall();
 
 //Frees media and shuts down SDL
 void close( Block* blocks[] );

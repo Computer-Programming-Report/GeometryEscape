@@ -20,4 +20,7 @@ const int BLOCK_BLACK = 11; // block
 const int BLOCK_SPIKE = 01; // type 1 death
 const int BLOCK_LAVA = 02; // type 2 death
 
+//grvity
+const int gravity = 6;
+
 #endif

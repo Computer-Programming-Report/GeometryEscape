@@ -23,12 +23,6 @@ void Dot::handleEvent( SDL_Event& e )
         //Adjust the velocity
         switch( e.key.keysym.sym )
         {
-            case SDLK_UP: 
-				mVelY -= DOT_VEL_Y; 
-				break;
-			case SDLK_DOWN: 
-				mVelY += DOT_VEL_Y; 
-				break;
             case SDLK_LEFT: 
 				mVelX -= DOT_VEL_X; 
 				break;
@@ -36,6 +30,15 @@ void Dot::handleEvent( SDL_Event& e )
 				mVelX += DOT_VEL_X; 
 				break;
         }
+        if(e.key.keysym.sym == SDLK_SPACE && !isjump)
+        {
+        	mVelY -= DOT_VEL_Y; 
+			isjump = true ;
+		}
+		else
+		{
+			mVelY -= gravity;
+		}
     }
     //If a key was released
     else if( e.type == SDL_KEYUP && e.key.repeat == 0 )
@@ -43,8 +46,6 @@ void Dot::handleEvent( SDL_Event& e )
         //Adjust the velocity
         switch( e.key.keysym.sym )
         {
-            case SDLK_UP: mVelY += DOT_VEL_Y;break;
-            case SDLK_DOWN: mVelY -= DOT_VEL_Y; break;
             case SDLK_LEFT: mVelX += DOT_VEL_X; break;
             case SDLK_RIGHT: mVelX -= DOT_VEL_X; break;
         }
@@ -56,6 +57,14 @@ int posY;
 void Dot::move( Block *blocks[] )
 {
     //Move the dot left or right
+    if(mVelX < 0)
+    {
+    	loadMediaLeft();
+	}
+	else if(mVelX > 0)
+	{
+		loadMediaRight();
+	}
     mBox.x += mVelX; 
     posX = mBox.x; 
 
@@ -63,10 +72,12 @@ void Dot::move( Block *blocks[] )
     if( ( mBox.x < 0 ) || ( mBox.x + DOT_WIDTH > LEVEL_WIDTH ) || touchesWall( mBox, blocks ) )
     {
         //move back
+        loadMediaTouchWall();
         mBox.x -= mVelX;
     }
 
     //Move the dot up or down
+    mVelY += gravity;
     mBox.y += mVelY;
     posY = mBox.y; 
 	    
@@ -74,6 +85,8 @@ void Dot::move( Block *blocks[] )
     if( ( mBox.y < 0 ) || ( mBox.y + DOT_HEIGHT > LEVEL_HEIGHT ) || touchesWall( mBox, blocks ))
     {   
 		mBox.y -= mVelY; 
+		mVelY = 0 ;
+        isjump = false ;
     }  
 }
 
@@ -116,4 +129,4 @@ const int Dot::DOT_HEIGHT = 60;
 
 //Maximum axis velocity of the dot
 const int Dot::DOT_VEL_X = 10;
-const int Dot::DOT_VEL_Y = 10;
+const int Dot::DOT_VEL_Y = 45;

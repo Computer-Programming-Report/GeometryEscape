@@ -193,6 +193,51 @@ bool loadMedia( Block* blocks[] )
 	return success;
 }
 
+bool loadMediaRight()
+{
+	//Loading success flag
+	bool success = true;
+
+	//Load dot texture
+	if(!gDotTexture.loadFromFile( "26_motion/square-1.jpg" ) )
+	{
+		printf( "Failed to load dot texture!\n" );
+		success = false;
+	}
+
+	return success;
+}
+
+bool loadMediaLeft()
+{
+		//Loading success flag
+	bool success = true;
+
+	//Load dot texture
+	if(!gDotTexture.loadFromFile( "26_motion/square-2.jpg" ) )
+	{
+		printf( "Failed to load dot texture!\n" );
+		success = false;
+	}
+
+	return success;
+}
+
+bool loadMediaTouchWall()
+{
+		//Loading success flag
+	bool success = true;
+
+	//Load dot texture
+	if(!gDotTexture.loadFromFile( "26_motion/square-3.jpg" ) )
+	{
+		printf( "Failed to load dot texture!\n" );
+		success = false;
+	}
+
+	return success;
+}
+
 void close( Block* blocks[] )
 {
 	//Deallocate blocks

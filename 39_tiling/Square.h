@@ -32,6 +32,9 @@ class Dot
 
 		//Shows the dot on the screen
 		void render( SDL_Rect& camera );
+		
+		// 是否在空中 
+		bool isjump = false;
 
     private:
 		//Collision box of the dot
@@ -40,6 +43,8 @@ class Dot
 		//The velocity of the dot
 		int mVelX; 
 		int mVelY;
+		
+	
 		
 };
 #endif
