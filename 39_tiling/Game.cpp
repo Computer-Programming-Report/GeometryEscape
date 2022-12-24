@@ -1,12 +1,32 @@
 #include "Game.h"
 extern SDL_Renderer* gRenderer;
 extern LTexture gProTexture; // get Prof_H texture 
-extern LTexture gAnswerTexture;
+extern LTexture gSpingerTexture;
 int backgroundOffset_x = 0;
 int backgroundOffset_y = 0;
 
 void DemoGame::process(bool start)
 {
+	Obstacle mCharacter;
+	Prof_H p; 
+	Lava l;
+	Springer sr;
+	Spike sk;
+	Obstacle *dType[] = {&p, &l, &sr, &sk}; // death type pointer
+	enObstacle type = prof_h; // enum 
+	
+	// invoke func. death(), let main character to be not alive (death)	
+//	if (dType[type]->death.()) 
+//	{
+//		/* 
+//		todo:
+//		1. Scene stop instantly, load death scene(cliche must be included!)
+//		2. the scene cotain a button(back to menu)
+//		*/ 
+//		// invoke func. add_times(), let (death types)++
+//		dType[type]->add_times();
+//	}
+
 	//The level blocks
 	Block* blockSet[ TOTAL_BLOCKS ];
 	
@@ -28,11 +48,6 @@ void DemoGame::process(bool start)
 		//Level camera
 		SDL_Rect camera = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT }; // here
 		
-		//The Prof_H scrolling offset
-		int scrollingOffset = 0;
-		// counter for Prof_H moving
-		int c = 0; 
-		
 		//While application is running
 		while((start) && (!quit))
 		{
@@ -49,22 +64,7 @@ void DemoGame::process(bool start)
 				//Handle input for the dot
 				dot.handleEvent( e2 );
 			}
-			
-			// Prof_H move on his own!
-			if ( (c / 100) % 8 < 4) 
-			{
-				scrollingOffset += 2;
-				if( scrollingOffset > 800)
-					scrollingOffset = 0;	
-			}
-			else
-			{
-				scrollingOffset -= 2;
-				if( scrollingOffset < -800 )
-					scrollingOffset = 0;
-			}
-			c+=2;
-			
+						
 			//Move the dot
 			dot.move( blockSet );
 			dot.setCamera( camera );
@@ -73,15 +73,12 @@ void DemoGame::process(bool start)
 			SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
 			SDL_RenderClear( gRenderer );
 			
-			// Render Prof_H
-			gProTexture.render(scrollingOffset + 800 - backgroundOffset_x , -backgroundOffset_y ); // different height 
-			gProTexture.render(scrollingOffset + 2500 - backgroundOffset_x , -backgroundOffset_y + 50); // different height
-			gProTexture.render(-(scrollingOffset - 2500) - backgroundOffset_x , -backgroundOffset_y + 30); // different height 
-			gProTexture.render(scrollingOffset + 4000 - backgroundOffset_x , -backgroundOffset_y + 50); // different height 
-			gProTexture.render(-(scrollingOffset - 6000) - backgroundOffset_x , -backgroundOffset_y + 30); // different height 
-			gProTexture.render(-(scrollingOffset - 8300) - backgroundOffset_x , -backgroundOffset_y + 80); // different height 
-			gProTexture.render(scrollingOffset + 7100 - backgroundOffset_x , -backgroundOffset_y + 15); // different height
 			
+			// Render Prof_H
+			Prof_H pShow;
+			pShow.Prof_render();
+			
+			 
 			//Render level
 			for( int i = 0; i < TOTAL_BLOCKS; ++i )
 			{
@@ -91,8 +88,9 @@ void DemoGame::process(bool start)
 			// Render Square
 			dot.render( camera );
 
-//			AnswerSheet ans;
-//			ans.detect();
+			// Render Spinger
+			Springer srShow;
+			srShow.Springer_render();
 			
 			//Update screen
 			SDL_RenderPresent( gRenderer );			

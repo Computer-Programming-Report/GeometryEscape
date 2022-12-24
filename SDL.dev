@@ -29,7 +29,7 @@ IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=0
 CompilerSettings=0000000000000000000000000
-UnitCount=15
+UnitCount=17
 
 [VersionInfo]
 Major=1
@@ -181,7 +181,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit16]
-FileName=39_tiling\Square.cpp
+FileName=39_tiling\Obstacle.cpp
 CompileCpp=1
 Folder=
 Compile=1
@@ -191,7 +191,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit17]
-FileName=39_tiling\Square.h
+FileName=39_tiling\Obstacle.h
 CompileCpp=1
 Folder=
 Compile=1

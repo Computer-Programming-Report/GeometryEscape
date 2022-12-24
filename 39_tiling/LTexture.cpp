@@ -3,7 +3,8 @@
 LTexture gDotTexture; // get Square texture 
 LTexture gBlockTexture; // get block texture
 LTexture gProTexture; // get Prof_H texture 
-LTexture gAnswerTexture; // get AnswerSheet texture
+LTexture gSpringerTexture; // get Spinger texture
+LTexture gElectricTexture; // get ElectricBall texture
 
 //The window we'll be rendering to
 SDL_Window* gWindow = NULL;

@@ -9,7 +9,7 @@ extern SDL_Renderer* gRenderer;
 extern LTexture gDotTexture; // get Square texture 
 extern LTexture gBlockTexture; // get block texture
 extern LTexture gProTexture; // get Prof_H texture 
-extern LTexture gAnswerTexture; // get AnswerSheet texture
+extern LTexture gSpringerTexture; // get AnswerSheet texture
 
 bool setBlocks( Block* blocks[] )
 {
@@ -157,7 +157,7 @@ bool loadMedia( Block* blocks[] )
 	bool success = true;
 
 	//Load dot texture
-	if( !gDotTexture.loadFromFile( "39_tiling/square-1.png" ) )
+	if( !gDotTexture.loadFromFile( "39_tiling/square-1.jpg" ) )
 	{
 		printf( "Failed to load dot texture!\n" );
 		success = false;
@@ -185,7 +185,7 @@ bool loadMedia( Block* blocks[] )
 	}
 	
 	
-	if( !gAnswerTexture.loadFromFile( "39_tiling/AnswerSheet.png" ) )
+	if( !gSpringerTexture.loadFromFile( "39_tiling/springer.png" ) )
 	{
 		printf( "Failed to load block set texture!\n" );
 		success = false;

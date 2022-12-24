@@ -6,6 +6,7 @@
 #include "Block.h" // Block.h
 #include "Square.h" // Square.h
 #include "function.h" // function.h
+#include "Obstacle.h" // Obstacle.h
 class DemoGame
 {
 	public:
