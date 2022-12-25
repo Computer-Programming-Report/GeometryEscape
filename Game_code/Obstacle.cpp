@@ -13,7 +13,6 @@ extern int *sPos_Y;
 // initialize
 Obstacle::Obstacle()
 {
-	alive = true;
 	for(int i = 0; i < 4; i++)
 		death_times[i] = 0;
 }
@@ -34,8 +33,11 @@ Springer::Springer()
 	int srCouter = 0; 
 	
 	// initialize Springer's position
-	int srPos_X = 0;
-	int srPos_Y = 0;
+	mBox.x = 0;
+	mBox.y = 0;
+	
+	mBox.w = 60;
+	mBox.h = 90;
 }
 
 // record Square' position
@@ -84,43 +86,49 @@ void Prof_H::Prof_render()
 	pPos_Y = -backgroundOffset_y;
 	gProTexture.render(pPos_X , pPos_Y);
 	detect(sPos_X , sPos_Y);
-	attack();
+//	attack();
 	
 	pPos_X = scrollingOffset + 2500 - backgroundOffset_x;
 	pPos_Y = -backgroundOffset_y + 50; 
 	gProTexture.render(pPos_X , pPos_Y);
 	detect(sPos_X , sPos_Y);
-	attack();
+//	attack();
 	
 	pPos_X = -(scrollingOffset - 2500) - backgroundOffset_x;
 	pPos_Y = -backgroundOffset_y + 30;
 	gProTexture.render(pPos_X , pPos_Y);
 	detect(sPos_X , sPos_Y);
-	attack();
+//	attack();
 	
 	pPos_X = scrollingOffset + 4000 - backgroundOffset_x;
 	pPos_Y = -backgroundOffset_y + 50; 
 	gProTexture.render(pPos_X , pPos_Y);
 	detect(sPos_X , sPos_Y);
-	attack();
+//	attack();
 	
 	pPos_X = -(scrollingOffset - 6000) - backgroundOffset_x;
 	pPos_Y = -backgroundOffset_y + 30; 
 	gProTexture.render(pPos_X , pPos_Y);
 	detect(sPos_X , sPos_Y);
-	attack();
+//	attack();
 	
 	pPos_X = -(scrollingOffset - 8300) - backgroundOffset_x;
 	pPos_Y = -backgroundOffset_y + 80; 
 	gProTexture.render(pPos_X , pPos_Y);
 	detect(sPos_X , sPos_Y);
-	attack();
+//	attack();
 	
 	pPos_X = scrollingOffset + 9000 - backgroundOffset_x;
 	pPos_Y = -backgroundOffset_y + 15; 
 	gProTexture.render(pPos_X , pPos_Y);
 	detect(sPos_X , sPos_Y);
-	attack();
+//	attack();
+	
+	pPos_X = scrollingOffset + 12000 - backgroundOffset_x;
+	pPos_Y = -backgroundOffset_y + 15; 
+	gProTexture.render(pPos_X , pPos_Y);
+	detect(sPos_X , sPos_Y);
+//	attack();
 }
 
 // render Springer
@@ -141,24 +149,27 @@ void Springer::Springer_render()
 	}
 	srCouter+=4;
 	
-	srPos_X = 2240 - backgroundOffset_x;
-	srPos_Y = scrollingOffset - backgroundOffset_y; 
-	gSpringerTexture.render(srPos_X , srPos_Y + 200);
+	mBox.x = 2240 - backgroundOffset_x;
+	mBox.y = scrollingOffset - backgroundOffset_y; 
+	gSpringerTexture.render(mBox.x , mBox.y + 200);
 	
-	srPos_X = 3600 - backgroundOffset_x;
-	srPos_Y = scrollingOffset - backgroundOffset_y; 
-	gSpringerTexture.render(srPos_X , srPos_Y + 100);
+	mBox.x = 3600 - backgroundOffset_x;
+	mBox.y = scrollingOffset - backgroundOffset_y; 
+	gSpringerTexture.render(mBox.x , mBox.y + 100);
 	
-	srPos_X = 4000 - backgroundOffset_x;
-	srPos_Y = scrollingOffset - backgroundOffset_y; 
-	gSpringerTexture.render(srPos_X , srPos_Y + 200);
+	mBox.x = 4000 - backgroundOffset_x;
+	mBox.y = scrollingOffset - backgroundOffset_y; 
+	gSpringerTexture.render(mBox.x , mBox.y + 200);
 	
-	srPos_X = 5400 - backgroundOffset_x;
-	srPos_Y = scrollingOffset - backgroundOffset_y; 
-	gSpringerTexture.render(srPos_X , srPos_Y + 200);
+	mBox.x = 5400 - backgroundOffset_x;
+	mBox.y = scrollingOffset - backgroundOffset_y; 
+	gSpringerTexture.render(mBox.x , mBox.y + 200);
 	
-	srPos_X = 6180 - backgroundOffset_x;
-	srPos_Y = scrollingOffset - backgroundOffset_y; 
-	gSpringerTexture.render(srPos_X , srPos_Y + 200); 
+	mBox.x = 6180 - backgroundOffset_x;
+	mBox.y = scrollingOffset - backgroundOffset_y; 
+	gSpringerTexture.render(mBox.x , mBox.y + 200); 
+	
+	mBox.x = 10000 - backgroundOffset_x;
+	mBox.y = scrollingOffset - backgroundOffset_y; 
+	gSpringerTexture.render(mBox.x , mBox.y + 200); 
 }
-// How to detect "touch"?

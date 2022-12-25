@@ -10,7 +10,6 @@ extern bool death;
 class Obstacle 
 {	
 	protected:
-		bool alive;
 		
 		// an array to store death times
 		int death_times[4];
@@ -20,7 +19,7 @@ class Obstacle
 		Obstacle();
 		
 		// death
-		virtual bool sDeath(){return 0;}
+		virtual void sDeath(){}
 		
 		// counter of death times for six obstacles
 		virtual void add_times(){}
@@ -62,10 +61,7 @@ class Prof_H : public Obstacle
 		// default constuctor
 		Prof_H();
 		// death
-		bool sDeath()
-		{ 
-			return !alive;
-		}
+		void sDeath(){}
 		// render Prof_H
 		void Prof_render(); 
 		
@@ -83,24 +79,29 @@ class Springer : public Obstacle
 	1. When character touch it, show death scene (alive = false)
 	*/	
 	private:
-		int srPos_X, srPos_Y;
-		
 		//The Prof_H scrolling offset
 		int scrollingOffset;
+		
 		// counter for Prof_H moving
-		int srCouter; 
-		//
-		int sX, sY;	
+		int srCouter;
+		
 	public:
 		// default constuctor
 		Springer();
+		
+		//The attributes of the springer
+		SDL_Rect mBox;
+		
 		// death
-		bool sDeath()
+		void sDeath()
 		{ 
-			return !alive;
+			death = true;
 		}
 	
 		// Render Springer
 		void Springer_render();
+		
+		//Get the collision box
+		SDL_Rect getBox();
 };
 #endif

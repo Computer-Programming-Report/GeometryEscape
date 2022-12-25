@@ -10,12 +10,13 @@ extern LTexture gSquareTexture; // get Square texture
 extern LTexture gBlockTexture; // get block texture
 extern LTexture gProTexture; // get Prof_H texture 
 extern LTexture gSpringerTexture; // get AnswerSheet texture
-//here begin
 extern LTexture gPauseTexture;//pause button
 extern LTexture gPauseSceneTexture;
 extern LTexture gBackTexture;
 extern LTexture gContinueTexture;
 extern LTexture gFireTexture;
+
+bool death = false;
 
 bool setBlocks( Block* blocks[] )
 {
@@ -125,7 +126,6 @@ bool setBlocks( Block* blocks[] )
     return blocksLoaded;
 }
 
-bool death = false; //still alive
 
 bool touchesWall( SDL_Rect box, Block* blocks[] )
 {
@@ -133,7 +133,7 @@ bool touchesWall( SDL_Rect box, Block* blocks[] )
     for( int i = 0; i < TOTAL_BLOCKS; ++i )
     {
         //If the block is a wall type block
-        if( ( blocks[ i ]->getType() >= BLOCK_BLACK ))
+        if( blocks[ i ]->getType() >= BLOCK_BLACK )
         {
             //If the collision box touches the wall block
             if( checkCollision( box, blocks[ i ]->getBox() ) )
@@ -202,13 +202,19 @@ bool loadMedia( Block* blocks[] )
 	//Load Springer
 	if( !gSpringerTexture.loadFromFile( "Game_code/picture/springer.png" ) )
 	{
-		printf( "Failed to load block set texture!\n" );
+		printf( "Failed to load springer set texture!\n" );
 		success = false;
 	}
 	
 	if( !gFireTexture.loadFromFile( "Game_code/picture/fire_ball.png" ) )
 	{
-		printf( "Failed to load block set texture!\n" );
+		printf( "Failed to load fireball set texture!\n" );
+		success = false;
+	}
+	
+	if(!gFireTexture.loadFromFile( "Game_code/picture/fire_ball.png" ))
+	{
+		printf( "Failed to load end set texture!\n" );
 		success = false;
 	}
 	

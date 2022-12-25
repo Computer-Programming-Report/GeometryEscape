@@ -4,6 +4,9 @@ extern int backgroundOffset_x;
 extern int backgroundOffset_y;
 int *sPos_X = NULL;
 int *sPos_Y = NULL;
+extern bool death;
+Springer *boom;
+
 Square::Square() : isjump(false)
 {
     //Initialize the collision box
@@ -68,7 +71,7 @@ void Square::move( Block *blocks[] )
     mBox.x += mVelX; 
 
     //If the square went too far to the left or right or touched a wall
-    if( ( mBox.x < 0 ) || ( mBox.x + SQUARE_WIDTH > LEVEL_WIDTH ) || touchesWall( mBox, blocks ) )
+    if( ( mBox.x < 0 ) || ( mBox.x + SQUARE_WIDTH > LEVEL_WIDTH ) || touchesWall( Square::mBox, blocks ) )
     {
         //move back
         loadMediaTouchWall();
@@ -80,12 +83,17 @@ void Square::move( Block *blocks[] )
     mBox.y += mVelY;
     
     //If the square went too far up or down or touched a wall
-    if( ( mBox.y < 0 ) || ( mBox.y + SQUARE_HEIGHT > LEVEL_HEIGHT ) || touchesWall( mBox, blocks ))
+    if( ( mBox.y < 0 ) || ( mBox.y + SQUARE_HEIGHT > LEVEL_HEIGHT ) || touchesWall( Square::mBox, blocks ))
     {   
 		mBox.y -= mVelY; 
 		mVelY = 0 ;
         isjump = false;
     } 
+    
+//    if(checkCollision( Square::mBox, boom->mBox ) )
+//    {
+//    	boom->sDeath();
+//	}
     
     sPos_X = &mBox.x;
 	sPos_Y = &mBox.y;

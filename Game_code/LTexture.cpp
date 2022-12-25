@@ -6,12 +6,21 @@ SDL_Window* gWindow = NULL;
 SDL_Renderer* gRenderer = NULL;
 
 //Scene textures
+<<<<<<< HEAD
 LTexture gSquareTexture; // get Square texture 
 LTexture gBlockTexture; // get block texture
 LTexture gProTexture; // get Prof_H texture 
 LTexture gSpringerTexture; // get Spinger texture
 LTexture gFireTexture; // get FireBall texture
 LTexture gPauseTexture;//pause button
+=======
+LTexture gSquareTexture; 	 // get Square texture 
+LTexture gBlockTexture; 	 // get block texture
+LTexture gProTexture; 		 // get Prof_H texture 
+LTexture gSpringerTexture; 	 // get Spinger texture
+LTexture gFireTexture; 		 // get FireBall texture
+LTexture gPauseTexture;      // get pause button texture
+>>>>>>> 7a2e892 (m)
 LTexture gPauseSceneTexture;
 LTexture gBackTexture;
 LTexture gContinueTexture;

@@ -1,4 +1,5 @@
 #include "Game.h"
+#include <iostream>
 extern SDL_Renderer* gRenderer;
 extern LTexture gProTexture; // get Prof_H texture 
 extern LTexture gSpringerTexture;  // get Springer texture
@@ -12,6 +13,7 @@ int backgroundOffset_y = 0;
 
 void DemoGame::process_game(bool gstart)
 {
+	
 	//The level blocks
 	Block* blockSet[ TOTAL_BLOCKS ];
 	
@@ -36,7 +38,7 @@ void DemoGame::process_game(bool gstart)
 		SDL_Rect camera = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT }; // here
 		
 		//While application is running
-		while((gstart) && (!quit) && (!death) )
+		while((gstart) && (!quit))
 		{	
 			//Handle events on queue
 			while( SDL_PollEvent( &e2 ) != 0 )
@@ -92,12 +94,21 @@ void DemoGame::process_game(bool gstart)
 			//ps.renderback();
 			ps.rendercontinue();
 			//Update screen
-			SDL_RenderPresent( gRenderer );			
+			SDL_RenderPresent( gRenderer );	
+			
+			if (death)
+			{
+				break;	
+			}
+					
 		}
 		ps.checkdeath(death);
 	}
+<<<<<<< HEAD
 //	return gstart;
     
+=======
+>>>>>>> 7a2e892 (m)
 	//Free resources and close SDL
 	close( blockSet );
 }

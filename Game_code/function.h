@@ -1,9 +1,10 @@
 #ifndef funcThis
 #define funcThis
-#include "Block.h"
 #include <SDL.h> // SDL.h
+#include "Block.h"
 #include "LTexture.h" 
 #include "Constant.h"
+#include "Obstacle.h"
 //Starts up SDL and creates window
 bool init();
 
