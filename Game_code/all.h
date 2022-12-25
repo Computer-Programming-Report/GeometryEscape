@@ -37,3 +37,8 @@
 #define dThis
 #include "Demo.h" // Demo.h
 #endif
+
+#ifndef oThis
+#define oThis
+#include "Obstacle.h" // Obstacle.h
+#endif

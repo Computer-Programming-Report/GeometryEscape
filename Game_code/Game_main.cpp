@@ -3,16 +3,17 @@
 
 int main( int argc, char* args[] )
 {
-	// game not starts yet
-	bool gStart = false;
 	
-	// run the menu
-	DemoMenu mRun;
-	gStart = mRun.process();
-	
-	// run the game	
-	DemoGame gRun;
-	gRun.process(gStart);
+	bool gStart = false; // game not starts yet
+	bool mBack = false; // back to menu
+	DemoMenu mRun; // run the menu
+	DemoGame gRun; // run the game
+//	do
+//	{
+		gStart = mRun.process_menu();
+		gRun.process_game(gStart);	
+		
+//	}while(mBack);
 		
 	return 0;	
 }

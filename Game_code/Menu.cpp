@@ -192,13 +192,13 @@ Set_Buttons::Set_Buttons()
 
 void Set_Buttons::SetPosition()
 {
-    gButtons_dstrect[0].x = 770; gButtons_dstrect[0].y = 350;
+    gButtons_dstrect[0].x = 670; gButtons_dstrect[0].y = 350;
 
     gButtons_dstrect[1].x = 780; gButtons_dstrect[1].y = 240;
 
     gButtons_dstrect[2].x = 780; gButtons_dstrect[2].y = 170;
 
-    gButtons_dstrect[3].x = 570; gButtons_dstrect[3].y = 350;
+    gButtons_dstrect[3].x = 590; gButtons_dstrect[3].y = 175;
 
     gButtons_dstrect[4].x = 590; gButtons_dstrect[4].y = 175;
 }
@@ -216,7 +216,7 @@ void Set_Buttons::SetPath()
                                 "Game_src/menu/button-rule1.jpg",
                                 "Game_src/menu/picture-best.jpg"};
 
-    for(int i=0;i<5;i++)
+    for(int i=0;i<4;i++)
     {
         gButtons[i]=loadSurface( button_path[i]);
         colored_gButtons[i]= loadSurface(colored_button_path[i]);
@@ -581,7 +581,7 @@ bool Button_Event::react_3(SDL_Event& e)
     return true;
 
 }
-bool DemoMenu::process()
+bool DemoMenu::process_menu() // back to menu while die
 {
     Screen_control::init();
     Set_Buttons();
@@ -597,51 +597,52 @@ bool DemoMenu::process()
     bool quit = false;
     bool ifchunk[4] = {true};
     while((!start) && (!quit)) // not start yet and not quit
-    {
-        while( SDL_PollEvent( &e ) )
-        {
-            if( e.type == SDL_QUIT ) quit = true;
-            for(int i=0;i<4;i++)
-            {
-                handleEvent(i,&e);
-                if(mCurrentSprite[i] ==BUTTON_SPRITE_MOUSE_OUT)
-                {
-                    SDL_BlitSurface(gButtons[i],NULL,gScreenSurface,&gButtons_dstrect[i]);
-                    ifchunk[i] = true;
-                    SDL_UpdateWindowSurface(gWindow);
-                }
-                else
-                {
-                    if(ifchunk[i]) Mix_PlayChannel( -1, gChunk, 0 );
-                    ifchunk[i] = false;
-                }
-                if(mCurrentSprite[i] == BUTTON_SPRITE_MOUSE_OVER_MOTION)
-                {
-                    SDL_BlitSurface(colored_gButtons[i],NULL,gScreenSurface,&gButtons_dstrect[i]);
-                    SDL_UpdateWindowSurface(gWindow);
-                }
-                if(mCurrentSprite[i] == BUTTON_SPRITE_MOUSE_DOWN)
-                {
-                    bool ret = false;
-                    switch(i)
-                    {
-                        case 0:
-                            react_0(e);
-                            break;
-                        case 1:
-                            ret= react_1(e);
-                            break;
-                        case 2:
-                            ret= react_2(e);
-                            break;
-                        case 3:
-                            ret= react_3(e);
-                            break;
-                        default:break;
-                    }
-                }
-            }
-        }
-    }
+    	{
+    		while( SDL_PollEvent( &e ) )
+        	{
+            	if( e.type == SDL_QUIT ) 
+					quit = true;
+            	for(int i=0;i<4;i++)
+            	{
+            	    handleEvent(i,&e);
+            	    if(mCurrentSprite[i] ==BUTTON_SPRITE_MOUSE_OUT)
+            	    {
+            	        SDL_BlitSurface(gButtons[i],NULL,gScreenSurface,&gButtons_dstrect[i]);
+                    	ifchunk[i] = true;
+                    	SDL_UpdateWindowSurface(gWindow);
+                	}
+                	else
+                	{
+                	    if(ifchunk[i]) Mix_PlayChannel( -1, gChunk, 0 );
+                	    ifchunk[i] = false;
+                	}
+                	if(mCurrentSprite[i] == BUTTON_SPRITE_MOUSE_OVER_MOTION)
+                	{
+                	    SDL_BlitSurface(colored_gButtons[i],NULL,gScreenSurface,&gButtons_dstrect[i]);
+                	    SDL_UpdateWindowSurface(gWindow);
+                	}
+                	if(mCurrentSprite[i] == BUTTON_SPRITE_MOUSE_DOWN)
+                	{
+                	    bool ret = false;
+                	    switch(i)
+                	    {
+                	        case 0:
+                	            react_0(e);
+                	            break;
+                	        case 1:
+                	            ret= react_1(e);
+                	            break;
+                	        case 2:
+                	            ret= react_2(e);
+                   		        break;
+                        	case 3:
+                        	    ret= react_3(e);
+                        	    break;
+                        	default:break;
+                    	}	
+                	}	
+            	}
+        	}
+    	}	
 	return start; 
 }

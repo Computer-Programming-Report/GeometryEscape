@@ -8,28 +8,8 @@ extern bool death;
 int backgroundOffset_x = 0;
 int backgroundOffset_y = 0;
 
-void DemoGame::process(bool gstart)
+void DemoGame::process_game(bool gstart)
 {
-	Obstacle mCharacter;
-	Prof_H p; 
-	Lava l;
-	Springer sr;
-	Spike sk;
-	Obstacle *dType[] = {&p, &l, &sr, &sk}; // death type pointer
-	enObstacle type = prof_h; // enum 
-	
-	// invoke func. death(), let main character to be not alive (death)	
-	if (dType[type]->sDeath()) 
-	{
-		/* 
-		todo:
-		1. Scene stop instantly, load death scene(cliche must be included!)
-		2. the scene cotain a button(back to menu)
-		*/ 
-		// invoke func. add_times(), let (death types)++
-		dType[type]->add_times();
-	}
-
 	//The level blocks
 	Block* blockSet[ TOTAL_BLOCKS ];
 	
@@ -90,8 +70,7 @@ void DemoGame::process(bool gstart)
 			// Render Prof_H
 			Prof_H pShow;
 			pShow.Prof_render();
-			
-			 
+						 
 			//Render level
 			for( int i = 0; i < TOTAL_BLOCKS; ++i )
 			{
@@ -115,6 +94,8 @@ void DemoGame::process(bool gstart)
 			SDL_RenderPresent( gRenderer );			
 		}
 	}
+//	return gstart;
+
 	//Free resources and close SDL
 	close( blockSet );
 }

@@ -17,7 +17,7 @@ class Square
 
 		//Maximum axis velocity of the square
 		static const int SQUARE_VEL_X = 15;
-		static const int SQUARE_VEL_Y = 45;
+		static const int SQUARE_VEL_Y = 32;
 		
 		//Initializes the variables
 		Square();

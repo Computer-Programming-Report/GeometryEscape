@@ -15,6 +15,7 @@ extern LTexture gPauseTexture;//pause button
 extern LTexture gPauseSceneTexture;
 extern LTexture gBackTexture;
 extern LTexture gContinueTexture;
+extern LTexture gFireTexture;
 
 bool setBlocks( Block* blocks[] )
 {
@@ -107,6 +108,13 @@ bool setBlocks( Block* blocks[] )
 			gBlockClips[ BLOCK_LAVA ].y = 240;
 			gBlockClips[ BLOCK_LAVA ].w = BLOCK_WIDTH;
 			gBlockClips[ BLOCK_LAVA ].h = BLOCK_HEIGHT;
+			
+			// flag
+			gBlockClips[ BLOCK_FLAG ].x = 0;
+			gBlockClips[ BLOCK_FLAG ].y = 420;
+			gBlockClips[ BLOCK_FLAG ].w = BLOCK_WIDTH;
+			gBlockClips[ BLOCK_FLAG ].h = BLOCK_HEIGHT;
+			
 		}
 	}
 
@@ -197,6 +205,13 @@ bool loadMedia( Block* blocks[] )
 		printf( "Failed to load block set texture!\n" );
 		success = false;
 	}
+	
+	if( !gFireTexture.loadFromFile( "Game_code/picture/fire_ball.png" ) )
+	{
+		printf( "Failed to load block set texture!\n" );
+		success = false;
+	}
+	
 	return success;
 }
 
@@ -261,10 +276,6 @@ void close( Block* blocks[] )
 	gSquareTexture.free();
 	gBlockTexture.free();
 	gProTexture.free();
-	gPauseTexture.free();
-	gPauseSceneTexture.free();
-	gBackTexture.free();
-	gContinueTexture.free();
 
 	//Destroy window	
 	SDL_DestroyRenderer( gRenderer );

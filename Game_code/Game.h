@@ -11,6 +11,6 @@
 class DemoGame
 {
 	public:
-    	void process(bool gstart);
+    	void process_game(bool gstart);
 };
 #endif

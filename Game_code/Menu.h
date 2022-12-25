@@ -81,6 +81,6 @@ protected:
 class DemoMenu : public Button_Event
 {
 	public:
-    	bool process();
+    	bool process_menu();
 };
 #endif 

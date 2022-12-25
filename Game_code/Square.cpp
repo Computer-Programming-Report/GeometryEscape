@@ -2,6 +2,8 @@
 extern LTexture gSquareTexture; // get Square texture 
 extern int backgroundOffset_x;
 extern int backgroundOffset_y;
+int *sPos_X = NULL;
+int *sPos_Y = NULL;
 Square::Square() : isjump(false)
 {
     //Initialize the collision box
@@ -85,13 +87,8 @@ void Square::move( Block *blocks[] )
         isjump = false;
     } 
     
-	// detect square position
-	Prof_H execute; 
-	execute.detect(mBox.x, mBox.y);
-	
-	// attack
-	execute.attack();
-	
+    sPos_X = &mBox.x;
+	sPos_Y = &mBox.y;
 }
 
 void Square::setCamera( SDL_Rect& camera )

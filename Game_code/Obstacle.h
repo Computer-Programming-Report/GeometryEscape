@@ -4,10 +4,9 @@
 #include "function.h"
 #include "SDL.h"
 #include "Block.h"
+#include "Square.h"
 extern bool death;
 
-// four Obstacles' names
-enum enObstacle{prof_h, lava, springer, spike}; 
 class Obstacle 
 {	
 	protected:
@@ -29,10 +28,8 @@ class Obstacle
 		// return death times to statistic 
 		virtual int return_times(){}
 		
-		
 		// destructor
 		~Obstacle(){}
-		
 };
 
 class Prof_H : public Obstacle
@@ -46,62 +43,37 @@ class Prof_H : public Obstacle
 	
 	private:
 		//The Prof_H scrolling offset
-		int scrollingOffset;
+		int scrollingOffset, bScrollingOffset;
 		
 		// counter for Prof_H moving
-		int pCouter; 
+		int pCouter, bCounter; 
 		
 		// Prof_H's position
-		int pPos_X, pPos_Y;
+		int pPos_X; 
+		int pPos_Y;
 		
-		// Square's position
-		int sPos_X, sPos_Y;
+		// Electric ball position
+		int ePos_X;
+		int ePos_Y;
 		
+		// 
+		int sX, sY;
 	public:
-		
+		// default constuctor
 		Prof_H();
-		// convert protected to public in this class	
-		using Obstacle::sDeath;
-	
 		// death
 		bool sDeath()
 		{ 
 			return !alive;
 		}
-	
-		// counter of death times of main character, killed by prof_hsieh 
-		void add_times()
-		{
-			++death_times[prof_h];
-		}
-		
 		// render Prof_H
 		void Prof_render(); 
 		
 		// record square's position
-		void detect(int x, int y);
+		void detect(int *x, int *y);
 		
 		// atack square
 		void attack();
-};
-
-class Lava : public Obstacle
-{
-	public:
-		// convert protected to public in this class	
-		using Obstacle::sDeath;
-		
-		// death
-		bool sDeath()
-		{ 
-			return !alive;
-		}
-	
-		// counter of death times of main character, killed by lava 
-		void add_times()
-		{
-			++death_times[lava];
-		}
 };
 
 class Springer : public Obstacle
@@ -117,12 +89,10 @@ class Springer : public Obstacle
 		int scrollingOffset;
 		// counter for Prof_H moving
 		int srCouter; 
-			
+		//
+		int sX, sY;	
 	public:
-		
-		// convert protected to public in this class	
-		using Obstacle::sDeath;
-		
+		// default constuctor
 		Springer();
 		// death
 		bool sDeath()
@@ -130,36 +100,7 @@ class Springer : public Obstacle
 			return !alive;
 		}
 	
-		// counter of death times of main character, killed by springer 
-		void add_times()
-		{
-			++death_times[springer];
-		}
-		
 		// Render Springer
 		void Springer_render();
-		
-		// detect square
-//		void detect(int x, int y);
 };
-
-class Spike : public Obstacle
-{
-	public:
-		// convert protected to public in this class	
-		using Obstacle::sDeath;
-	
-		// death
-		bool sDeath()
-		{ 
-			return !alive;
-		}
-	
-		// counter of death times of main character, killed by spike 
-		void add_times()
-		{
-			++death_times[spike];
-		}
-};
-
 #endif
