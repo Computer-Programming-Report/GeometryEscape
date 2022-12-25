@@ -2,7 +2,7 @@
 
 //The window renderer
 extern SDL_Renderer* gRenderer;
-
+//extern bool back;
 bool start = false;
 
 Screen_control::Screen_control(){}

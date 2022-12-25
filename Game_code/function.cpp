@@ -10,6 +10,11 @@ extern LTexture gSquareTexture; // get Square texture
 extern LTexture gBlockTexture; // get block texture
 extern LTexture gProTexture; // get Prof_H texture 
 extern LTexture gSpringerTexture; // get AnswerSheet texture
+//here begin
+extern LTexture gPauseTexture;//pause button
+extern LTexture gPauseSceneTexture;
+extern LTexture gBackTexture;
+extern LTexture gContinueTexture;
 
 bool setBlocks( Block* blocks[] )
 {
@@ -256,6 +261,10 @@ void close( Block* blocks[] )
 	gSquareTexture.free();
 	gBlockTexture.free();
 	gProTexture.free();
+	gPauseTexture.free();
+	gPauseSceneTexture.free();
+	gBackTexture.free();
+	gContinueTexture.free();
 
 	//Destroy window	
 	SDL_DestroyRenderer( gRenderer );

@@ -2,7 +2,9 @@
 extern SDL_Renderer* gRenderer;
 extern LTexture gProTexture; // get Prof_H texture 
 extern LTexture gSpringerTexture;  // get Springer texture
+
 extern bool death;
+//extern bool back;
 int backgroundOffset_x = 0;
 int backgroundOffset_y = 0;
 
@@ -46,13 +48,14 @@ void DemoGame::process(bool gstart)
 		//The square that will be moving around on the screen
 		Square square; //Dot dot;
 		
+		PauseButton pause;
+		PauseButton  ps;
 		//Level camera
 		SDL_Rect camera = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT }; // here
 		
 		//While application is running
-		while((gstart) && (!quit) && (!death))
-		{
-			
+		while((gstart) && (!quit) && (!death) )
+		{	
 			//Handle events on queue
 			while( SDL_PollEvent( &e2 ) != 0 )
 			{
@@ -64,8 +67,18 @@ void DemoGame::process(bool gstart)
 				
 				//Handle input for the square
 				square.handleEvent( e2 );
+				
+				if(pause.handleEvent( &e2 ) )
+				{
+					ps.loadMediaPauseScene();
+					ps.loadMediaPause_Back();
+					ps.loadMediaPause_Continue();	
+					ps.test = true;	
+				}
+				ps.PausehandleEvent( &e2 );	
+				
 			}
-						
+					
 			//Move the square
 			square.move( blockSet );
 			square.setCamera( camera );
@@ -73,7 +86,6 @@ void DemoGame::process(bool gstart)
 			//Clear screen
 			SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
 			SDL_RenderClear( gRenderer );
-			
 			
 			// Render Prof_H
 			Prof_H pShow;
@@ -90,8 +102,14 @@ void DemoGame::process(bool gstart)
 			square.render( camera );
 
 			// Render Spinger
-			Springer srShow;
-			srShow.Springer_render();
+			Springer srShow;  
+			srShow.Springer_render(); 
+			
+			//show pause button
+			pause.render();
+			ps.renderPauseScene();
+			ps.renderback();
+			ps.rendercontinue();
 			
 			//Update screen
 			SDL_RenderPresent( gRenderer );			

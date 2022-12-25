@@ -14,6 +14,8 @@ const int BLOCK_HEIGHT = 60;
 const int TOTAL_BLOCKS = 1600; // 160 * 10 = 1600
 const int TOTAL_BLOCK_SPRITES = 12;
 
+
+
 //The different tile sprites
 const int BLOCK_WHITE = 0; // air
 const int BLOCK_BLACK = 11; // block

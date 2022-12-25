@@ -7,6 +7,7 @@
 #include "Square.h" // Square.h
 #include "function.h" // function.h
 #include "Obstacle.h" // Obstacle.h
+#include "PauseButton.h"//PauseButton.h
 class DemoGame
 {
 	public:

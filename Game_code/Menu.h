@@ -83,5 +83,4 @@ class DemoMenu : public Button_Event
 	public:
     	bool process();
 };
-
 #endif 
