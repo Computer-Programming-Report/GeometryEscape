@@ -1,20 +1,26 @@
-#ifndef iThis
-#define iThis
-#include <SDL.h>
+//
+// Created by 魏志宇 on 2022/12/9.
+//
+
+#ifndef SDL_TEST1_INITIAL_BACKGROUND_H
+#define SDL_TEST1_INITIAL_BACKGROUND_H
+#include <SDL2/SDL.h>
+#include "/Library/frameworks/SDL2_ttf.framework/Headers/SDL_ttf.h"
+#include "/Library/frameworks/SDL2_image.framework/Headers/SDL_image.h"
+#include "/Library/frameworks/SDL2_mixer.framework/Headers/SDL_mixer.h"
 #include <string>
-#include <SDL_image.h>
-#include <SDL_ttf.h>
-#include <SDL_mixer.h>
 #include <cmath>
 #include <iostream>
-#include "Constant.h"
-#include "LTexture.h"
-#include "function.h"
+//#include <fstream>
+
 using namespace std;
+
+
+
 class Screen_control {
 public:
 
-    Screen_control();
+    Screen_control(){};
     bool init();
     virtual SDL_Surface* loadSurface(std::string);
     virtual void SetPath();
@@ -48,8 +54,8 @@ class Set_Buttons :public Screen_control
 {
 public:
     Set_Buttons();
-//    const string Buttons_menu[5]={"gRun","gSetting","gStatistics","gRule","gBest"};
-//    const int TOTAL_BUTTONS= 5;
+    const string Buttons_menu[5]={"gRun","gSetting","gStatistics","gRule","gBest"};
+    const int TOTAL_BUTTONS= 5;
     void SetPosition();
     void SetPath();
 };
@@ -78,10 +84,11 @@ protected:
     LButtonSprite mCurrentSprite[5];
 };
 
-class DemoMenu : public Button_Event
+
+class demo:public Button_Event
 {
-	public:
-    	bool process();
+public:
+    void process();
 };
 
-#endif 
+#endif //SDL_TEST1_INITIAL_BACKGROUND_H

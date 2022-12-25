@@ -6,7 +6,9 @@ extern SDL_Renderer* gRenderer;
 bool start = false;
 
 Screen_control::Screen_control(){}
-bool Screen_control::loadMusic() {
+
+bool Screen_control::loadMusic() 
+{
     bool success = true;
     gMusic = Mix_LoadMUS( "geometry_escape/music/dark_xfile.mp3" );
     if( gMusic == NULL )
@@ -16,12 +18,23 @@ bool Screen_control::loadMusic() {
     }
     return success;
 }
+bool Screen_control::loadChunk() 
+{
+    bool success = true;
+    gChunk = Mix_LoadWAV( "geometry_escape/music/button-chunk.mp3" );
+    if( gChunk == NULL )
+    {
+        printf( "Failed to load chunk! SDL_mixer Error: \n", Mix_GetError() );
+        success = false;
+    }
+    return success;
+}
 
 bool Screen_control::init()
 {
-	// Wei
+    // Wei
 	//Initialization flag
-    bool success = true;
+    bool success = true; 
     
     //Initialize SDL
     if (SDL_Init(SDL_INIT_VIDEO| SDL_INIT_AUDIO) < 0)
@@ -68,6 +81,7 @@ bool Screen_control::init()
 				}
 				else
 				{
+					gScreenSurface = SDL_GetWindowSurface( gWindow );
 					//Initialize renderer color
 					SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
 	
@@ -82,6 +96,7 @@ bool Screen_control::init()
             else
             {
                 loadMusic();
+                loadChunk();
             }
         }       
         
@@ -95,14 +110,14 @@ SDL_Surface* Screen_control::loadSurface (std::string path)
     SDL_Surface* loadedSurface = IMG_Load( path.c_str() );
     if( loadedSurface == NULL )
     {
-        std::cout << "Unable to load image ! SDL_image Error: \n" << path.c_str() <<  IMG_GetError();
+        cout << "Unable to load image ! SDL_image Error: \n" << path.c_str() <<  IMG_GetError();
     }
     else
     {
         optimizedSurface = SDL_ConvertSurface( loadedSurface, gScreenSurface->format, 0 );
         if( optimizedSurface == NULL )
         {
-            std::cout << "Unable to optimize image ! SDL Error: \n" << path.c_str() << SDL_GetError();
+            cout << "Unable to optimize image ! SDL Error: \n" << path.c_str() << SDL_GetError();
         }
         SDL_FreeSurface( loadedSurface );
     }
@@ -149,6 +164,8 @@ void Screen_control::close()
     gBackground = NULL;
     Mix_FreeMusic( gMusic );
     gMusic = NULL;
+    Mix_FreeChunk(gChunk);
+    gChunk = NULL;
 
     SDL_DestroyWindow(gWindow);
     gWindow = NULL;
@@ -158,7 +175,7 @@ void Screen_control::close()
     SDL_Quit();
 }
 
-// here TOTAL_BUTTONS
+
 Set_Buttons::Set_Buttons()
 {
     gButtons=new SDL_Surface* [5];
@@ -194,8 +211,8 @@ void Set_Buttons::SetPath()
                            "geometry_escape/menu/picture-best.jpg"};
 
     const char* colored_button_path[5]={"geometry_escape/menu/button-run1.jpg",
-                                "geometry_escape/menu/button-settings.jpg",
-                                "geometry_escape/menu/button-statistic.jpg",
+                                "geometry_escape/menu/button-settings1.jpg",
+                                "geometry_escape/menu/button-statistic1.jpg",
                                 "geometry_escape/menu/button-rule1.jpg",
                                 "geometry_escape/menu/picture-best.jpg"};
 
@@ -255,14 +272,17 @@ void Button_Event::get_lrPosition(int index)
     rPosition[index].x = lPosition[index].x + Button_WH[index][0];
     rPosition[index].y = lPosition[index].y + Button_WH[index][1];
 }
-void Button_Event::react_0(SDL_Event& e)
+void Button_Event::react_0(SDL_Event &e)
 {
-	start = true;
+    start = true;
 }
+
 bool Button_Event::react_1(SDL_Event& e)
 {
+    bool ifchunk = true;
     SDL_Surface* reactSur = NULL;
     SDL_Surface* back = NULL;
+    SDL_Surface* colored_back = NULL;
     SDL_Surface* on = NULL;
     SDL_Surface* off = NULL;
     SDL_Rect back_dstrect;
@@ -270,6 +290,7 @@ bool Button_Event::react_1(SDL_Event& e)
 
     reactSur = loadSurface("geometry_escape/scene/setting-scene.jpg");
     back = loadSurface("geometry_escape/scene/back.jpg");
+    colored_back = loadSurface("geometry_escape/scene/back1.jpg");
     on = loadSurface("geometry_escape/scene/on-button.jpg");
     off = loadSurface("geometry_escape/scene/off-button.jpg");
     back_dstrect.x =800;
@@ -330,7 +351,22 @@ bool Button_Event::react_1(SDL_Event& e)
                         break;
                 }
             }
-
+            if(CurrentSprite ==BUTTON_SPRITE_MOUSE_OUT)
+            {
+                SDL_BlitSurface(back,NULL,gScreenSurface,&back_dstrect);
+                ifchunk = true;
+                SDL_UpdateWindowSurface(gWindow);
+            }
+            else
+            {
+                if(ifchunk) Mix_PlayChannel( -1, gChunk, 0 );
+                ifchunk = false;
+            }
+            if(CurrentSprite == BUTTON_SPRITE_MOUSE_OVER_MOTION && inside2)
+            {
+                SDL_BlitSurface(colored_back,NULL,gScreenSurface,&back_dstrect);
+                SDL_UpdateWindowSurface(gWindow);
+            }
             if(CurrentSprite == BUTTON_SPRITE_MOUSE_DOWN)
             {
                 if(inside1)
@@ -373,12 +409,15 @@ bool Button_Event::react_1(SDL_Event& e)
 }
 bool Button_Event::react_2(SDL_Event& e)
 {
+    bool ifchunk = true;
     SDL_Surface* reactSur = NULL;
     SDL_Surface* back = NULL;
+    SDL_Surface* colored_back = NULL;
     SDL_Rect back_dstrect;
 
     reactSur = loadSurface("geometry_escape/scene/statistics-scene.jpg");
     back = loadSurface("geometry_escape/scene/back.jpg");
+    colored_back = loadSurface("geometry_escape/scene/back1.jpg");
     back_dstrect.x =780;
     back_dstrect.y =50;
     SDL_BlitSurface( reactSur, NULL, gScreenSurface, NULL );
@@ -423,6 +462,22 @@ bool Button_Event::react_2(SDL_Event& e)
                 }
             }
 
+            if(CurrentSprite ==BUTTON_SPRITE_MOUSE_OUT)
+            {
+                SDL_BlitSurface(back,NULL,gScreenSurface,&back_dstrect);
+                ifchunk = true;
+                SDL_UpdateWindowSurface(gWindow);
+            }
+            else
+            {
+                if(ifchunk) Mix_PlayChannel( -1, gChunk, 0 );
+                ifchunk = false;
+            }
+            if(CurrentSprite == BUTTON_SPRITE_MOUSE_OVER_MOTION)
+            {
+                SDL_BlitSurface(colored_back,NULL,gScreenSurface,&back_dstrect);
+                SDL_UpdateWindowSurface(gWindow);
+            }
             if(CurrentSprite == BUTTON_SPRITE_MOUSE_DOWN)
             {
                 SDL_FreeSurface(back);
@@ -442,12 +497,15 @@ bool Button_Event::react_2(SDL_Event& e)
 
 bool Button_Event::react_3(SDL_Event& e)
 {
+    bool ifchunk = true;
     SDL_Surface* reactSur = NULL;
     SDL_Surface* back = NULL;
+    SDL_Surface* colored_back = NULL;
     SDL_Rect back_dstrect;
 
     reactSur = loadSurface("geometry_escape/scene/rule-scene.jpg");
     back = loadSurface("geometry_escape/scene/back.jpg");
+    colored_back = loadSurface("geometry_escape/scene/back1.jpg");
     back_dstrect.x =800;
     back_dstrect.y =500;
     SDL_BlitSurface( reactSur, NULL, gScreenSurface, NULL );
@@ -491,7 +549,22 @@ bool Button_Event::react_3(SDL_Event& e)
                         break;
                 }
             }
-
+            if(CurrentSprite ==BUTTON_SPRITE_MOUSE_OUT)
+            {
+                SDL_BlitSurface(back,NULL,gScreenSurface,&back_dstrect);
+                ifchunk = true;
+                SDL_UpdateWindowSurface(gWindow);
+            }
+            else
+            {
+                if(ifchunk) Mix_PlayChannel( -1, gChunk, 0 );
+                ifchunk = false;
+            }
+            if(CurrentSprite == BUTTON_SPRITE_MOUSE_OVER_MOTION)
+            {
+                SDL_BlitSurface(colored_back,NULL,gScreenSurface,&back_dstrect);
+                SDL_UpdateWindowSurface(gWindow);
+            }
             if(CurrentSprite == BUTTON_SPRITE_MOUSE_DOWN)
             {
                 SDL_FreeSurface(back);
@@ -522,19 +595,25 @@ bool DemoMenu::process()
     SDL_UpdateWindowSurface(gWindow);
     SDL_Event e;
     bool quit = false;
-    while( !start )
+    bool ifchunk[4] = {true};
+    while((!start) && (!quit)) // not start yet and not quit
     {
         while( SDL_PollEvent( &e ) )
         {
             if( e.type == SDL_QUIT ) quit = true;
-
             for(int i=0;i<4;i++)
             {
                 handleEvent(i,&e);
                 if(mCurrentSprite[i] ==BUTTON_SPRITE_MOUSE_OUT)
                 {
                     SDL_BlitSurface(gButtons[i],NULL,gScreenSurface,&gButtons_dstrect[i]);
+                    ifchunk[i] = true;
                     SDL_UpdateWindowSurface(gWindow);
+                }
+                else
+                {
+                    if(ifchunk[i]) Mix_PlayChannel( -1, gChunk, 0 );
+                    ifchunk[i] = false;
                 }
                 if(mCurrentSprite[i] == BUTTON_SPRITE_MOUSE_OVER_MOTION)
                 {
@@ -562,7 +641,7 @@ bool DemoMenu::process()
                     }
                 }
             }
-        } 
+        }
     }
 	return start; 
 }

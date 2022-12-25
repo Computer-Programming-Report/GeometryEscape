@@ -5,46 +5,44 @@
 #include "Constant.h" // Constant.h
 #include "function.h" // function.h
 #include "Block.h" // Block.h
-//The dot that will move around on the screen
-class Dot
+#include "Obstacle.h"
+//The square that will move around on the screen
+class Square
 {
-//	friend class AnswerSheet;
+//	friend class Obstacle;
     public:
-		//The dimensions of the dot
-		static const int DOT_WIDTH;
-		static const int DOT_HEIGHT;
+		//The dimensions of the square
+		static const int SQUARE_WIDTH = 60;
+		static const int SQUARE_HEIGHT = 60;
 
-		//Maximum axis velocity of the dot
-		static const int DOT_VEL_X;
-		static const int DOT_VEL_Y;
+		//Maximum axis velocity of the square
+		static const int SQUARE_VEL_X = 15;
+		static const int SQUARE_VEL_Y = 45;
 		
 		//Initializes the variables
-		Dot();
+		Square();
 
-		//Takes key presses and adjusts the dot's velocity
+		//Takes key presses and adjusts the square's velocity
 		void handleEvent( SDL_Event& e );
 
-		//Moves the dot and check collision against blocks
+		//Moves the square and check collision against blocks
 		void move( Block *blocks[] );
 
-		//Centers the camera over the dot
+		//Centers the camera over the square
 		void setCamera( SDL_Rect& camera );
 
-		//Shows the dot on the screen
+		//Shows the square on the screen
 		void render( SDL_Rect& camera );
 		
 		// 是否在空中 
 		bool isjump;
 
     private:
-		//Collision box of the dot
+		//Collision box of the square
 		SDL_Rect mBox;
 		
-		//The velocity of the dot
+		//The velocity of the square
 		int mVelX; 
-		int mVelY;
-		
-	
-		
+		int mVelY;	
 };
 #endif

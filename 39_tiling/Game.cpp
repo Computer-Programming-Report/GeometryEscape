@@ -1,11 +1,12 @@
 #include "Game.h"
 extern SDL_Renderer* gRenderer;
 extern LTexture gProTexture; // get Prof_H texture 
-extern LTexture gSpingerTexture;
+extern LTexture gSpringerTexture;  // get Springer texture
+extern bool death;
 int backgroundOffset_x = 0;
 int backgroundOffset_y = 0;
 
-void DemoGame::process(bool start)
+void DemoGame::process(bool gstart)
 {
 	Obstacle mCharacter;
 	Prof_H p; 
@@ -16,16 +17,16 @@ void DemoGame::process(bool start)
 	enObstacle type = prof_h; // enum 
 	
 	// invoke func. death(), let main character to be not alive (death)	
-//	if (dType[type]->death.()) 
-//	{
-//		/* 
-//		todo:
-//		1. Scene stop instantly, load death scene(cliche must be included!)
-//		2. the scene cotain a button(back to menu)
-//		*/ 
-//		// invoke func. add_times(), let (death types)++
-//		dType[type]->add_times();
-//	}
+	if (dType[type]->sDeath()) 
+	{
+		/* 
+		todo:
+		1. Scene stop instantly, load death scene(cliche must be included!)
+		2. the scene cotain a button(back to menu)
+		*/ 
+		// invoke func. add_times(), let (death types)++
+		dType[type]->add_times();
+	}
 
 	//The level blocks
 	Block* blockSet[ TOTAL_BLOCKS ];
@@ -42,14 +43,14 @@ void DemoGame::process(bool start)
 		
 		//Event handler
 		SDL_Event e2;
-		//The dot that will be moving around on the screen
-		Dot dot;
+		//The square that will be moving around on the screen
+		Square square; //Dot dot;
 		
 		//Level camera
 		SDL_Rect camera = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT }; // here
 		
 		//While application is running
-		while((start) && (!quit))
+		while((gstart) && (!quit) && (!death))
 		{
 			
 			//Handle events on queue
@@ -61,13 +62,13 @@ void DemoGame::process(bool start)
 					quit = true;
 				}
 				
-				//Handle input for the dot
-				dot.handleEvent( e2 );
+				//Handle input for the square
+				square.handleEvent( e2 );
 			}
 						
-			//Move the dot
-			dot.move( blockSet );
-			dot.setCamera( camera );
+			//Move the square
+			square.move( blockSet );
+			square.setCamera( camera );
 			
 			//Clear screen
 			SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
@@ -86,7 +87,7 @@ void DemoGame::process(bool start)
 			}
 			
 			// Render Square
-			dot.render( camera );
+			square.render( camera );
 
 			// Render Spinger
 			Springer srShow;

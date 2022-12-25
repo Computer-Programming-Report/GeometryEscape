@@ -10,6 +10,6 @@
 class DemoGame
 {
 	public:
-    	void process(bool start);
+    	void process(bool gstart);
 };
 #endif

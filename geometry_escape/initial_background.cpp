@@ -3,12 +3,24 @@
 const int SCREEN_WIDTH = 960;
 const int SCREEN_HEIGHT = 600;
 
+bool start = false;
+
 bool Screen_control::loadMusic() {
     bool success = true;
-    gMusic = Mix_LoadMUS( "/Initail_environment-Music/sdl_test1/geometry_escape/music/dark_xfile.mp3" );
+    gMusic = Mix_LoadMUS( "/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/music/dark_xfile.mp3" );
     if( gMusic == NULL )
     {
         printf( "Failed to load beat music! SDL_mixer Error: \n", Mix_GetError() );
+        success = false;
+    }
+    return success;
+}
+bool Screen_control::loadChunk() {
+    bool success = true;
+    gChunk = Mix_LoadWAV( "/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/music/button-chunk.mp3" );
+    if( gChunk == NULL )
+    {
+        printf( "Failed to load chunk! SDL_mixer Error: \n", Mix_GetError() );
         success = false;
     }
     return success;
@@ -50,6 +62,7 @@ bool Screen_control::init()
             else
             {
                 loadMusic();
+                loadChunk();
             }
         }
     }
@@ -78,9 +91,9 @@ SDL_Surface* Screen_control::loadSurface (std::string path)
 
 void Screen_control::SetPath()
 {
-    gBackground = loadSurface("/Initail_environment-Music/sdl_test1/geometry_escape/menu/background.jpg");
-    gTitle = loadSurface("/Initail_environment-Music/sdl_test1/geometry_escape/menu/picture-font.jpg");
-    gButtonboard = loadSurface("/Initail_environment-Music/sdl_test1/geometry_escape/menu/picture-board.jpg");
+    gBackground = loadSurface("/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/menu/background.jpg");
+    gTitle = loadSurface("/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/menu/picture-font.jpg");
+    gButtonboard = loadSurface("/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/menu/picture-board.jpg");
 }
 
 void Screen_control::SetPosition()
@@ -116,6 +129,8 @@ void Screen_control::close()
     gBackground = NULL;
     Mix_FreeMusic( gMusic );
     gMusic = NULL;
+    Mix_FreeChunk(gChunk);
+    gChunk = NULL;
 
     SDL_DestroyWindow(gWindow);
     gWindow = NULL;
@@ -154,17 +169,17 @@ void Set_Buttons::SetPosition()
 }
 void Set_Buttons::SetPath()
 {
-    const char* button_path[5]={"/Initail_environment-Music/sdl_test1/geometry_escape/menu/button-run.jpg",
-                           "/Initail_environment-Music/sdl_test1/geometry_escape/menu/button-settings.jpg",
-                           "/Initail_environment-Music/sdl_test1/geometry_escape/menu/button-statistic.jpg",
-                           "/Initail_environment-Music/sdl_test1/geometry_escape/menu/button-rule.jpg",
-                           "/Initail_environment-Music/sdl_test1/geometry_escape/menu/picture-best.jpg"};
+    const char* button_path[5]={"/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/menu/button-run.jpg",
+                           "/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/menu/button-settings.jpg",
+                           "/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/menu/button-statistic.jpg",
+                           "/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/menu/button-rule.jpg",
+                           "/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/menu/picture-best.jpg"};
 
-    const char* colored_button_path[5]={"/Initail_environment-Music/sdl_test1/geometry_escape/menu/button-run1.jpg",
-                                "/Initail_environment-Music/sdl_test1/geometry_escape/menu/button-settings.jpg",
-                                "/Initail_environment-Music/sdl_test1/geometry_escape/menu/button-statistic.jpg",
-                                "/Initail_environment-Music/sdl_test1/geometry_escape/menu/button-rule1.jpg",
-                                "/Initail_environment-Music/sdl_test1/geometry_escape/menu/picture-best.jpg"};
+    const char* colored_button_path[5]={"/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/menu/button-run1.jpg",
+                                "/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/menu/button-settings1.jpg",
+                                "/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/menu/button-statistic1.jpg",
+                                "/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/menu/button-rule1.jpg",
+                                "/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/menu/picture-best.jpg"};
 
     for(int i=0;i<5;i++)
     {
@@ -222,19 +237,27 @@ void Button_Event::get_lrPosition(int index)
     rPosition[index].x = lPosition[index].x + Button_WH[index][0];
     rPosition[index].y = lPosition[index].y + Button_WH[index][1];
 }
+void Button_Event::react_0(SDL_Event &e)
+{
+    start = true;
+}
+
 bool Button_Event::react_1(SDL_Event& e)
 {
+    bool ifchunk = true;
     SDL_Surface* reactSur = NULL;
     SDL_Surface* back = NULL;
+    SDL_Surface* colored_back = NULL;
     SDL_Surface* on = NULL;
     SDL_Surface* off = NULL;
     SDL_Rect back_dstrect;
     SDL_Rect onoff_dstrect;
 
-    reactSur = loadSurface("/Initail_environment-Music/sdl_test1/geometry_escape/scene/setting-scene.jpg");
-    back = loadSurface("/Initail_environment-Music/sdl_test1/geometry_escape/scene/back.jpg");
-    on = loadSurface("/Initail_environment-Music/sdl_test1/geometry_escape/scene/on-button.jpg");
-    off = loadSurface("/Initail_environment-Music/sdl_test1/geometry_escape/scene/off-button.jpg");
+    reactSur = loadSurface("/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/scene/setting-scene.jpg");
+    back = loadSurface("/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/scene/back.jpg");
+    colored_back = loadSurface("/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/scene/back1.jpg");
+    on = loadSurface("/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/scene/on-button.jpg");
+    off = loadSurface("/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/scene/off-button.jpg");
     back_dstrect.x =800;
     back_dstrect.y =500;
     onoff_dstrect.x =800;
@@ -293,7 +316,22 @@ bool Button_Event::react_1(SDL_Event& e)
                         break;
                 }
             }
-
+            if(CurrentSprite ==BUTTON_SPRITE_MOUSE_OUT)
+            {
+                SDL_BlitSurface(back,NULL,gScreenSurface,&back_dstrect);
+                ifchunk = true;
+                SDL_UpdateWindowSurface(gWindow);
+            }
+            else
+            {
+                if(ifchunk) Mix_PlayChannel( -1, gChunk, 0 );
+                ifchunk = false;
+            }
+            if(CurrentSprite == BUTTON_SPRITE_MOUSE_OVER_MOTION && inside2)
+            {
+                SDL_BlitSurface(colored_back,NULL,gScreenSurface,&back_dstrect);
+                SDL_UpdateWindowSurface(gWindow);
+            }
             if(CurrentSprite == BUTTON_SPRITE_MOUSE_DOWN)
             {
                 if(inside1)
@@ -336,12 +374,15 @@ bool Button_Event::react_1(SDL_Event& e)
 }
 bool Button_Event::react_2(SDL_Event& e)
 {
+    bool ifchunk = true;
     SDL_Surface* reactSur = NULL;
     SDL_Surface* back = NULL;
+    SDL_Surface* colored_back = NULL;
     SDL_Rect back_dstrect;
 
-    reactSur = loadSurface("/Initail_environment-Music/sdl_test1/geometry_escape/scene/statistics-scene.jpg");
-    back = loadSurface("/Initail_environment-Music/sdl_test1/geometry_escape/scene/back.jpg");
+    reactSur = loadSurface("/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/scene/statistics-scene.jpg");
+    back = loadSurface("/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/scene/back.jpg");
+    colored_back = loadSurface("/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/scene/back1.jpg");
     back_dstrect.x =780;
     back_dstrect.y =50;
     SDL_BlitSurface( reactSur, NULL, gScreenSurface, NULL );
@@ -386,6 +427,22 @@ bool Button_Event::react_2(SDL_Event& e)
                 }
             }
 
+            if(CurrentSprite ==BUTTON_SPRITE_MOUSE_OUT)
+            {
+                SDL_BlitSurface(back,NULL,gScreenSurface,&back_dstrect);
+                ifchunk = true;
+                SDL_UpdateWindowSurface(gWindow);
+            }
+            else
+            {
+                if(ifchunk) Mix_PlayChannel( -1, gChunk, 0 );
+                ifchunk = false;
+            }
+            if(CurrentSprite == BUTTON_SPRITE_MOUSE_OVER_MOTION)
+            {
+                SDL_BlitSurface(colored_back,NULL,gScreenSurface,&back_dstrect);
+                SDL_UpdateWindowSurface(gWindow);
+            }
             if(CurrentSprite == BUTTON_SPRITE_MOUSE_DOWN)
             {
                 SDL_FreeSurface(back);
@@ -405,12 +462,15 @@ bool Button_Event::react_2(SDL_Event& e)
 
 bool Button_Event::react_3(SDL_Event& e)
 {
+    bool ifchunk = true;
     SDL_Surface* reactSur = NULL;
     SDL_Surface* back = NULL;
+    SDL_Surface* colored_back = NULL;
     SDL_Rect back_dstrect;
 
-    reactSur = loadSurface("/Initail_environment-Music/sdl_test1/geometry_escape/scene/rule-scene.jpg");
-    back = loadSurface("/Initail_environment-Music/sdl_test1/geometry_escape/scene/back.jpg");
+    reactSur = loadSurface("/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/scene/rule-scene.jpg");
+    back = loadSurface("/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/scene/back.jpg");
+    colored_back = loadSurface("/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/scene/back1.jpg");
     back_dstrect.x =800;
     back_dstrect.y =500;
     SDL_BlitSurface( reactSur, NULL, gScreenSurface, NULL );
@@ -454,7 +514,22 @@ bool Button_Event::react_3(SDL_Event& e)
                         break;
                 }
             }
-
+            if(CurrentSprite ==BUTTON_SPRITE_MOUSE_OUT)
+            {
+                SDL_BlitSurface(back,NULL,gScreenSurface,&back_dstrect);
+                ifchunk = true;
+                SDL_UpdateWindowSurface(gWindow);
+            }
+            else
+            {
+                if(ifchunk) Mix_PlayChannel( -1, gChunk, 0 );
+                ifchunk = false;
+            }
+            if(CurrentSprite == BUTTON_SPRITE_MOUSE_OVER_MOTION)
+            {
+                SDL_BlitSurface(colored_back,NULL,gScreenSurface,&back_dstrect);
+                SDL_UpdateWindowSurface(gWindow);
+            }
             if(CurrentSprite == BUTTON_SPRITE_MOUSE_DOWN)
             {
                 SDL_FreeSurface(back);
@@ -485,19 +560,25 @@ void demo::process()
     SDL_UpdateWindowSurface(gWindow);
     SDL_Event e;
     bool quit = false;
+    bool ifchunk[4] = {true};
     while( quit == false )
     {
         while( SDL_PollEvent( &e ) )
         {
             if( e.type == SDL_QUIT ) quit = true;
-
             for(int i=0;i<4;i++)
             {
                 handleEvent(i,&e);
                 if(mCurrentSprite[i] ==BUTTON_SPRITE_MOUSE_OUT)
                 {
                     SDL_BlitSurface(gButtons[i],NULL,gScreenSurface,&gButtons_dstrect[i]);
+                    ifchunk[i] = true;
                     SDL_UpdateWindowSurface(gWindow);
+                }
+                else
+                {
+                    if(ifchunk[i]) Mix_PlayChannel( -1, gChunk, 0 );
+                    ifchunk[i] = false;
                 }
                 if(mCurrentSprite[i] == BUTTON_SPRITE_MOUSE_OVER_MOTION)
                 {
@@ -510,7 +591,7 @@ void demo::process()
                     switch(i)
                     {
                         case 0:
-                            ret= react_0(e);
+                            react_0(e);
                             break;
                         case 1:
                             ret= react_1(e);
@@ -530,6 +611,8 @@ void demo::process()
     }
     close();
 }
+
+
 
 
 

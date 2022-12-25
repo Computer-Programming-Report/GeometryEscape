@@ -1,21 +1,21 @@
 #include "Square.h" // Square.h
-extern LTexture gDotTexture; // get Square texture 
+extern LTexture gSquareTexture; // get Square texture 
 extern int backgroundOffset_x;
 extern int backgroundOffset_y;
-Dot::Dot() : isjump(false)
+Square::Square() : isjump(false)
 {
     //Initialize the collision box
     mBox.x = 300;
-    mBox.y = 360;
-	mBox.w = DOT_WIDTH;
-	mBox.h = DOT_HEIGHT;
+    mBox.y = 300;
+	mBox.w = SQUARE_WIDTH;
+	mBox.h = SQUARE_HEIGHT;
 
     //Initialize the velocity
     mVelX = 0;
     mVelY = 0;
 }
 
-void Dot::handleEvent( SDL_Event& e )
+void Square::handleEvent( SDL_Event& e )
 {
     //If a key was pressed
 	if( e.type == SDL_KEYDOWN && e.key.repeat == 0 )
@@ -24,15 +24,15 @@ void Dot::handleEvent( SDL_Event& e )
         switch( e.key.keysym.sym )
         {
             case SDLK_LEFT: 
-				mVelX -= DOT_VEL_X; 
+				mVelX -= SQUARE_VEL_X; 
 				break;
             case SDLK_RIGHT: 
-				mVelX += DOT_VEL_X; 
+				mVelX += SQUARE_VEL_X; 
 				break;
         }
         if(e.key.keysym.sym == SDLK_SPACE && !isjump)
         {
-        	mVelY -= DOT_VEL_Y; 
+        	mVelY -= SQUARE_VEL_Y; 
 			isjump = true ;
 		}
 		else
@@ -46,17 +46,15 @@ void Dot::handleEvent( SDL_Event& e )
         //Adjust the velocity
         switch( e.key.keysym.sym )
         {
-            case SDLK_LEFT: mVelX += DOT_VEL_X; break;
-            case SDLK_RIGHT: mVelX -= DOT_VEL_X; break;
+            case SDLK_LEFT: mVelX += SQUARE_VEL_X; break;
+            case SDLK_RIGHT: mVelX -= SQUARE_VEL_X; break;
         }
     }
 }
 
-int posX;
-int posY;
-void Dot::move( Block *blocks[] )
+void Square::move( Block *blocks[] )
 {
-    //Move the dot left or right
+    //Move the square left or right
     if(mVelX < 0)
     {
     	loadMediaLeft();
@@ -66,35 +64,41 @@ void Dot::move( Block *blocks[] )
 		loadMediaRight();
 	}
     mBox.x += mVelX; 
-    posX = mBox.x; 
 
-    //If the dot went too far to the left or right or touched a wall
-    if( ( mBox.x < 0 ) || ( mBox.x + DOT_WIDTH > LEVEL_WIDTH ) || touchesWall( mBox, blocks ) )
+    //If the square went too far to the left or right or touched a wall
+    if( ( mBox.x < 0 ) || ( mBox.x + SQUARE_WIDTH > LEVEL_WIDTH ) || touchesWall( mBox, blocks ) )
     {
         //move back
         loadMediaTouchWall();
         mBox.x -= mVelX;
     }
 
-    //Move the dot up or down
+    //Move the square up or down
     mVelY += gravity;
     mBox.y += mVelY;
-    posY = mBox.y; 
-	    
-    //If the dot went too far up or down or touched a wall
-    if( ( mBox.y < 0 ) || ( mBox.y + DOT_HEIGHT > LEVEL_HEIGHT ) || touchesWall( mBox, blocks ))
+    
+    //If the square went too far up or down or touched a wall
+    if( ( mBox.y < 0 ) || ( mBox.y + SQUARE_HEIGHT > LEVEL_HEIGHT ) || touchesWall( mBox, blocks ))
     {   
 		mBox.y -= mVelY; 
 		mVelY = 0 ;
-        isjump = false ;
-    }  
+        isjump = false;
+    } 
+    
+	// detect square position
+	Prof_H execute; 
+	execute.detect(mBox.x, mBox.y);
+	
+	// attack
+	execute.attack();
+	
 }
 
-void Dot::setCamera( SDL_Rect& camera )
+void Square::setCamera( SDL_Rect& camera )
 {
-	//Center the camera over the dot
-	camera.x = ( mBox.x + DOT_WIDTH / 2 ) - SCREEN_WIDTH / 2;
-	camera.y = ( mBox.y + DOT_HEIGHT / 2 ) - SCREEN_HEIGHT / 2;
+	//Center the camera over the square
+	camera.x = ( mBox.x + SQUARE_WIDTH / 2 ) - SCREEN_WIDTH / 2;
+	camera.y = ( mBox.y + SQUARE_HEIGHT / 2 ) - SCREEN_HEIGHT / 2;
 
 	//Keep the camera in bounds
 	if( camera.x < 0 )
@@ -117,16 +121,9 @@ void Dot::setCamera( SDL_Rect& camera )
 	backgroundOffset_y = camera.y;
 }
 
-void Dot::render( SDL_Rect& camera )
+void Square::render( SDL_Rect& camera )
 {
-    //Show the dot
-	gDotTexture.render( mBox.x - camera.x, mBox.y - camera.y );
+    //Show the square
+	gSquareTexture.render( mBox.x - camera.x, mBox.y - camera.y );
 	
 }
-
-const int Dot::DOT_WIDTH = 60;
-const int Dot::DOT_HEIGHT = 60;
-
-//Maximum axis velocity of the dot
-const int Dot::DOT_VEL_X = 10;
-const int Dot::DOT_VEL_Y = 45;

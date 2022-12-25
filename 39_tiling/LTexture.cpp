@@ -1,16 +1,16 @@
 #include "LTexture.h" 
+
+//The window we'll be rendering to
+SDL_Window* gWindow = NULL;
+//The window renderer
+SDL_Renderer* gRenderer = NULL;
+
 //Scene textures
-LTexture gDotTexture; // get Square texture 
+LTexture gSquareTexture; // get Square texture 
 LTexture gBlockTexture; // get block texture
 LTexture gProTexture; // get Prof_H texture 
 LTexture gSpringerTexture; // get Spinger texture
 LTexture gElectricTexture; // get ElectricBall texture
-
-//The window we'll be rendering to
-SDL_Window* gWindow = NULL;
-
-//The window renderer
-SDL_Renderer* gRenderer = NULL;
 
 LTexture::LTexture()
 {

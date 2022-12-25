@@ -1,7 +1,12 @@
 #ifndef oThis
 #define oThis 
 #include "LTexture.h"
-// for obstacles' names
+#include "function.h"
+#include "SDL.h"
+#include "Block.h"
+extern bool death;
+
+// four Obstacles' names
 enum enObstacle{prof_h, lava, springer, spike}; 
 class Obstacle 
 {	
@@ -10,13 +15,13 @@ class Obstacle
 		
 		// an array to store death times
 		int death_times[4];
-
-		// death
-		virtual bool death(){}
 		 		
 	public:
 		// default constuctor (main character is alive initially) 
 		Obstacle();
+		
+		// death
+		virtual bool sDeath(){return 0;}
 		
 		// counter of death times for six obstacles
 		virtual void add_times(){}
@@ -24,8 +29,6 @@ class Obstacle
 		// return death times to statistic 
 		virtual int return_times(){}
 		
-		// 
-		virtual void detect(int x, int y){}
 		
 		// destructor
 		~Obstacle(){}
@@ -44,17 +47,24 @@ class Prof_H : public Obstacle
 	private:
 		//The Prof_H scrolling offset
 		int scrollingOffset;
+		
 		// counter for Prof_H moving
 		int pCouter; 
+		
+		// Prof_H's position
 		int pPos_X, pPos_Y;
+		
+		// Square's position
+		int sPos_X, sPos_Y;
+		
 	public:
 		
 		Prof_H();
 		// convert protected to public in this class	
-		using Obstacle::death;
+		using Obstacle::sDeath;
 	
 		// death
-		bool death()
+		bool sDeath()
 		{ 
 			return !alive;
 		}
@@ -68,21 +78,21 @@ class Prof_H : public Obstacle
 		// render Prof_H
 		void Prof_render(); 
 		
+		// record square's position
 		void detect(int x, int y);
+		
+		// atack square
+		void attack();
 };
 
 class Lava : public Obstacle
 {
-	/*
-	todo :
-	5. When character touch it, show death scene (alive = false)
-	*/
 	public:
 		// convert protected to public in this class	
-		using Obstacle::death;
+		using Obstacle::sDeath;
 		
 		// death
-		bool death()
+		bool sDeath()
 		{ 
 			return !alive;
 		}
@@ -92,16 +102,14 @@ class Lava : public Obstacle
 		{
 			++death_times[lava];
 		}
-		
-//		void detect(int x, int y);
 };
 
 class Springer : public Obstacle
 {
-		/*
-		todo: 
-		1. When character touch it, show death scene (alive = false)
-		*/	
+	/*
+	todo: 
+	1. When character touch it, show death scene (alive = false)
+	*/	
 	private:
 		int srPos_X, srPos_Y;
 		
@@ -111,12 +119,13 @@ class Springer : public Obstacle
 		int srCouter; 
 			
 	public:
+		
 		// convert protected to public in this class	
-		using Obstacle::death;
+		using Obstacle::sDeath;
 		
 		Springer();
 		// death
-		bool death()
+		bool sDeath()
 		{ 
 			return !alive;
 		}
@@ -136,17 +145,12 @@ class Springer : public Obstacle
 
 class Spike : public Obstacle
 {
-	/*
-	todo :
-	1. When character touch it, show death scene (alive = false)
-	*/	
-	
 	public:
 		// convert protected to public in this class	
-		using Obstacle::death;
+		using Obstacle::sDeath;
 	
 		// death
-		bool death()
+		bool sDeath()
 		{ 
 			return !alive;
 		}
@@ -156,8 +160,6 @@ class Spike : public Obstacle
 		{
 			++death_times[spike];
 		}
-		
-//		void detect(int x, int y);
 };
 
 #endif

@@ -1,12 +1,12 @@
-#include "function.h" // function.h
+#include "function.h" 
+
 extern SDL_Rect gBlockClips[ TOTAL_BLOCK_SPRITES ];
 //The window we'll be rendering to
 extern SDL_Window* gWindow;
-
 //The window renderer
 extern SDL_Renderer* gRenderer;
 
-extern LTexture gDotTexture; // get Square texture 
+extern LTexture gSquareTexture; // get Square texture 
 extern LTexture gBlockTexture; // get block texture
 extern LTexture gProTexture; // get Prof_H texture 
 extern LTexture gSpringerTexture; // get AnswerSheet texture
@@ -111,7 +111,9 @@ bool setBlocks( Block* blocks[] )
     //If the map was loaded fine
     return blocksLoaded;
 }
-bool death = false;
+
+bool death = false; //still alive
+
 bool touchesWall( SDL_Rect box, Block* blocks[] )
 {
     //Go through the blocks
@@ -126,22 +128,22 @@ bool touchesWall( SDL_Rect box, Block* blocks[] )
                 return true;
             }
         }
-        else if ( ( blocks[ i ]->getType() == BLOCK_SPIKE ) )
+        else if ( ( blocks[ i ]->getType() == BLOCK_SPIKE ) ) // touch the spike and death 
     	{
-            //If the collision box touches the wall block
+            //If the collision box touches the spike block
             if( checkCollision( box, blocks[ i ]->getBox() ) )
             {
             	death = true;
-                return true;
+                return death;
             }
         }
-        else if ( ( blocks[ i ]->getType() == BLOCK_LAVA ) )
+        else if ( ( blocks[ i ]->getType() == BLOCK_LAVA ) ) // touch the lava and death
     	{
-            //If the collision box touches the wall block
+            //If the collision box touches the lava block 
             if( checkCollision( box, blocks[ i ]->getBox() ) )
             {
             	death = true;
-                return true;
+                return death;
             }
         }
 	}
@@ -156,10 +158,10 @@ bool loadMedia( Block* blocks[] )
 	//Loading success flag
 	bool success = true;
 
-	//Load dot texture
-	if( !gDotTexture.loadFromFile( "39_tiling/square-1.jpg" ) )
+	//Load square texture
+	if( !gSquareTexture.loadFromFile( "39_tiling/square-1.jpg" ) )
 	{
-		printf( "Failed to load dot texture!\n" );
+		printf( "Failed to load square texture!\n" );
 		success = false;
 	}
 
@@ -184,7 +186,7 @@ bool loadMedia( Block* blocks[] )
 		success = false;
 	}
 	
-	
+	//Load Springer
 	if( !gSpringerTexture.loadFromFile( "39_tiling/springer.png" ) )
 	{
 		printf( "Failed to load block set texture!\n" );
@@ -198,10 +200,10 @@ bool loadMediaRight()
 	//Loading success flag
 	bool success = true;
 
-	//Load dot texture
-	if(!gDotTexture.loadFromFile( "39_tiling/square-1.jpg" ) )
+	//Load square texture
+	if(!gSquareTexture.loadFromFile( "39_tiling/square-1.jpg" ) )
 	{
-		printf( "Failed to load dot texture!\n" );
+		printf( "Failed to load square texture!\n" );
 		success = false;
 	}
 
@@ -210,13 +212,13 @@ bool loadMediaRight()
 
 bool loadMediaLeft()
 {
-		//Loading success flag
+	//Loading success flag
 	bool success = true;
 
-	//Load dot texture
-	if(!gDotTexture.loadFromFile( "39_tiling/square-2.jpg" ) )
+	//Load square texture
+	if(!gSquareTexture.loadFromFile( "39_tiling/square-2.jpg" ) )
 	{
-		printf( "Failed to load dot texture!\n" );
+		printf( "Failed to load square texture!\n" );
 		success = false;
 	}
 
@@ -225,13 +227,13 @@ bool loadMediaLeft()
 
 bool loadMediaTouchWall()
 {
-		//Loading success flag
+	//Loading success flag
 	bool success = true;
 
-	//Load dot texture
-	if(!gDotTexture.loadFromFile( "39_tiling/square-3.jpg" ) )
+	//Load square texture
+	if(!gSquareTexture.loadFromFile( "39_tiling/square-3.jpg" ) )
 	{
-		printf( "Failed to load dot texture!\n" );
+		printf( "Failed to load square texture!\n" );
 		success = false;
 	}
 
@@ -251,7 +253,7 @@ void close( Block* blocks[] )
 	}
 
 	//Free loaded images
-	gDotTexture.free();
+	gSquareTexture.free();
 	gBlockTexture.free();
 	gProTexture.free();
 
