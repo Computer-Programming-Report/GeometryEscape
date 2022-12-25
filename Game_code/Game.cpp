@@ -3,10 +3,12 @@ extern SDL_Renderer* gRenderer;
 extern LTexture gProTexture; // get Prof_H texture 
 extern LTexture gSpringerTexture;  // get Springer texture
 
-extern bool death;
+//extern SDL_Rect Death;
+
 //extern bool back;
 int backgroundOffset_x = 0;
 int backgroundOffset_y = 0;
+
 
 void DemoGame::process_game(bool gstart)
 {
@@ -51,7 +53,7 @@ void DemoGame::process_game(bool gstart)
 				if(pause.handleEvent( &e2 ) )
 				{
 					ps.loadMediaPauseScene();
-					ps.loadMediaPause_Back();
+					//ps.loadMediaPause_Back();
 					ps.loadMediaPause_Continue();	
 					ps.test = true;	
 				}
@@ -87,15 +89,15 @@ void DemoGame::process_game(bool gstart)
 			//show pause button
 			pause.render();
 			ps.renderPauseScene();
-			ps.renderback();
+			//ps.renderback();
 			ps.rendercontinue();
-			
 			//Update screen
 			SDL_RenderPresent( gRenderer );			
 		}
+		ps.checkdeath(death);
 	}
 //	return gstart;
-
+    
 	//Free resources and close SDL
 	close( blockSet );
 }

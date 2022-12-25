@@ -32,7 +32,7 @@ CompilerSettings=0000000000000000000000000
 <<<<<<< HEAD
 UnitCount=21
 =======
-UnitCount=18
+UnitCount=19
 >>>>>>> 789fc9a (merge)
 
 [VersionInfo]
@@ -54,27 +54,7 @@ ProductVersion=1.0.0.0
 AutoIncBuildNr=0
 SyncProduct=1
 
-[Unit1]
-FileName=Game_code\all.h
-CompileCpp=1
-Folder=
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
 [Unit2]
-FileName=Game_code\Block.cpp
-CompileCpp=1
-Folder=
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit3]
 FileName=Game_code\Block.h
 CompileCpp=1
 Folder=
@@ -84,8 +64,9 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit4]
+[Unit3]
 FileName=Game_code\block.map
+CompileCpp=1
 Folder=
 Compile=0
 Link=0
@@ -93,17 +74,17 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit6]
-FileName=Game_code\function.cpp
-CompileCpp=1
+[Unit4]
+FileName=Game_code\Constant.h
 Folder=
 Compile=1
 Link=1
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
+CompileCpp=1
 
-[Unit7]
+[Unit6]
 FileName=Game_code\function.h
 CompileCpp=1
 Folder=
@@ -113,7 +94,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit8]
+[Unit7]
 FileName=Game_code\Game.cpp
 CompileCpp=1
 Folder=
@@ -123,7 +104,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit9]
+[Unit8]
 FileName=Game_code\Game.h
 CompileCpp=1
 Folder=
@@ -133,7 +114,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit10]
+[Unit9]
 FileName=Game_code\Game_main.cpp
 CompileCpp=1
 Folder=
@@ -143,7 +124,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit11]
+[Unit10]
 FileName=Game_code\LTexture.cpp
 CompileCpp=1
 Folder=
@@ -153,7 +134,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit12]
+[Unit11]
 FileName=Game_code\LTexture.h
 CompileCpp=1
 Folder=
@@ -163,7 +144,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit13]
+[Unit12]
 FileName=Game_code\Menu.cpp
 CompileCpp=1
 Folder=
@@ -173,7 +154,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit14]
+[Unit13]
 FileName=Game_code\Menu.h
 CompileCpp=1
 Folder=
@@ -183,7 +164,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit15]
+[Unit14]
 FileName=Game_code\Obstacle.cpp
 CompileCpp=1
 Folder=
@@ -193,7 +174,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit16]
+[Unit15]
 FileName=Game_code\Obstacle.h
 CompileCpp=1
 Folder=
@@ -203,7 +184,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit17]
+[Unit16]
 FileName=Game_code\Square.cpp
 CompileCpp=1
 Folder=
@@ -213,8 +194,18 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit18]
+[Unit17]
 FileName=Game_code\Square.h
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit18]
+FileName=Game_code\PauseButton.cpp
 CompileCpp=1
 Folder=
 Compile=1
@@ -224,7 +215,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit19]
-FileName=Game_code\Square.h
+FileName=Game_code\PauseButton.h
 CompileCpp=1
 Folder=
 Compile=1
@@ -232,8 +223,8 @@ Link=1
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
-
 <<<<<<< HEAD
+
 [Unit21]
 FileName=Game_code\PauseButton.cpp
 CompileCpp=1
@@ -247,9 +238,27 @@ BuildCmd=
 [Unit20]
 FileName=Game_code\PauseButton.h
 =======
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
 [Unit5]
-FileName=Game_code\Constant.h
+FileName=Game_code\function.cpp
 >>>>>>> 789fc9a (merge)
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit1]
+FileName=Game_code\Block.cpp
 CompileCpp=1
 Folder=
 Compile=1

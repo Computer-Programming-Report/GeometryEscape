@@ -7,6 +7,8 @@
 #include "LTexture.h"
 #include "Menu.h"
 //here begin
+extern bool death;
+extern LTexture gDeathSceneTexture;
 class PauseButton 
 {
 	public:
@@ -26,20 +28,30 @@ class PauseButton
 	SDL_Rect Pause;
 	
 	bool loadMediaPauseScene(); 
-	bool loadMediaPause_Back();
-	bool loadMediaPause_BackYellow();
+	//bool loadMediaPause_Back();
+	//bool loadMediaPause_BackYellow();
 	bool loadMediaPause_Continue();
 	bool loadMediaPause_ContinueYellow();
+	bool loadMediaDeathScene();
 	
 	bool PausehandleEvent( SDL_Event* e );
 	
 	void renderPauseScene();
-	void renderback();
+//	void renderback();
 	void rendercontinue();
 	
 	SDL_Rect Pause_scene;
-	SDL_Rect PauseBack;
+	//SDL_Rect PauseBack;
 	SDL_Rect PauseContinue;
+	SDL_Rect Death;
+	void checkdeath(bool death)
+	{
+		if (death)
+		{
+			loadMediaDeathScene();
+			gDeathSceneTexture.render(0 , 0 , &Death);
+		}
+	}
 	protected:
 	//Top left position
 	SDL_Point mPosition;

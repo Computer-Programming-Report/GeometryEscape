@@ -4,7 +4,7 @@
 
 extern LTexture gPauseTexture;//pause button
 extern LTexture gPauseSceneTexture;
-extern LTexture gBackTexture;
+//extern LTexture gBackTexture;
 extern LTexture gContinueTexture;
 extern LTexture gRenderer;
 extern LTexture	gSquareTexture;
@@ -100,12 +100,12 @@ bool PauseButton::PausehandleEvent(SDL_Event* e)
 		SDL_GetMouseState( &x, &y );
 
 		//Check if mouse is in button
-		bool binside = true;
+	//	bool binside = true;
 		bool cinside = true;
 
 		//determine whether in back button
 		//Mouse is left of the button
-		if( x < 262)
+		/*if( x < 262)
 		{
 			binside = false;
 		}
@@ -123,15 +123,15 @@ bool PauseButton::PausehandleEvent(SDL_Event* e)
 		else if( y > 330 + 65 )
 		{
 			binside = false;
-		}
+		}*/
 		
 		//determine whether in continue button
-		if( x < 575)
+		if( x < 417 )
 		{
 			cinside = false;
 		}
 		//Mouse is right of the button
-		else if( x > 575 + 130 )
+		else if( x > 417 + 130 )
 		{
 			cinside = false;
 		}
@@ -147,15 +147,15 @@ bool PauseButton::PausehandleEvent(SDL_Event* e)
 		}
 
 		//Mouse is outside button
-		if( !binside && !cinside && test)
+		if( !cinside && test)
 		{
-			loadMediaPause_Back();
+		//	loadMediaPause_Back();
 			loadMediaPause_Continue();
 			
 			return true;
 		}
 		//Mouse is inside button
-		else if(binside && !cinside && test)
+		/*else if(binside && !cinside && test)
 		{
 			//Set mouse over sprite
 			switch( e->type )
@@ -179,8 +179,8 @@ bool PauseButton::PausehandleEvent(SDL_Event* e)
 				break;
 	
 			}
-		}
-		else if( !binside && cinside && test)
+		}*/
+		else if( cinside && test)
 		{
 			switch( e->type )
 			{
@@ -193,7 +193,7 @@ bool PauseButton::PausehandleEvent(SDL_Event* e)
 				case SDL_MOUSEBUTTONDOWN:
 				gPauseTexture.free();
 				gPauseSceneTexture.free();
-				gBackTexture.free();
+				//gBackTexture.free();
 				gContinueTexture.free();
 				test = false;
 				//Continue
@@ -272,7 +272,7 @@ bool PauseButton::loadMediaPauseScene()
 	return success;
 }
 
-bool PauseButton::loadMediaPause_Back()
+/*bool PauseButton::loadMediaPause_Back()
 {
 		//Loading success flag
 	bool success = true;
@@ -314,7 +314,7 @@ bool PauseButton::loadMediaPause_BackYellow()
 	}
 
 	return success;
-}
+}*/
 
 bool PauseButton::loadMediaPause_Continue()
 {
@@ -359,6 +359,27 @@ bool PauseButton::loadMediaPause_ContinueYellow()
 
 	return success;
 }
+bool PauseButton::loadMediaDeathScene()
+{
+		//Loading success flag
+	bool success = true;
+
+	//Load square texture
+	if(!gSquareTexture.loadFromFile( "Game_src/scene/DeathScene.jpg" ) )
+	{
+		printf( "Failed to load square texture!\n" );
+		success = false;
+	}
+	else
+	{
+		Death.x = 0;
+		Death.y = 0;
+		Death.w = 960;
+		Death.h = 600;
+	}
+
+	return success;
+}
 	
 void PauseButton::render()
 {
@@ -371,14 +392,14 @@ void PauseButton::renderPauseScene()
 	gPauseSceneTexture.render(0, 0, &Pause_scene);
 }
 
-void PauseButton::renderback()
+/*void PauseButton::renderback()
 {
 	gBackTexture.render(262, 330, &PauseBack);
-}
+}*/
 
 void PauseButton::rendercontinue()
 {
-	gContinueTexture.render(575, 330, &PauseContinue);
+	gContinueTexture.render(417, 330, &PauseContinue);
 }
 //here end
 

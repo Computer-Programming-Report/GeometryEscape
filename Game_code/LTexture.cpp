@@ -11,11 +11,11 @@ LTexture gBlockTexture; // get block texture
 LTexture gProTexture; // get Prof_H texture 
 LTexture gSpringerTexture; // get Spinger texture
 LTexture gFireTexture; // get FireBall texture
-//here begin
 LTexture gPauseTexture;//pause button
 LTexture gPauseSceneTexture;
 LTexture gBackTexture;
 LTexture gContinueTexture;
+LTexture gDeathSceneTexture;
 
 LTexture::LTexture()
 {
