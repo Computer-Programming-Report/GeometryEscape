@@ -4,8 +4,8 @@
 CPP      = g++.exe
 CC       = gcc.exe
 WINDRES  = windres.exe
-OBJ      = 39_tiling/Block.o 39_tiling/function.o 39_tiling/Game.o 39_tiling/Game_main.o 39_tiling/LTexture.o 39_tiling/Menu.o 39_tiling/Square.o 39_tiling/Obstacle.o
-LINKOBJ  = 39_tiling/Block.o 39_tiling/function.o 39_tiling/Game.o 39_tiling/Game_main.o 39_tiling/LTexture.o 39_tiling/Menu.o 39_tiling/Square.o 39_tiling/Obstacle.o
+OBJ      = Game_code/Block.o Game_code/Constant.o Game_code/function.o Game_code/Game.o Game_code/Game_main.o Game_code/LTexture.o Game_code/Menu.o Game_code/Obstacle.o Game_code/Square.o
+LINKOBJ  = Game_code/Block.o Game_code/Constant.o Game_code/function.o Game_code/Game.o Game_code/Game_main.o Game_code/LTexture.o Game_code/Menu.o Game_code/Obstacle.o Game_code/Square.o
 LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -L"SDL2-2.24.2/x86_64-w64-mingw32/lib" -L"SDL_bgi-2.6.0/bin/Mingw64" -L"SDL2_image-2.6.2/x86_64-w64-mingw32/lib" -L"SDL2_mixer-2.6.2/x86_64-w64-mingw32/lib" -L"SDL2_ttf-2.20.1/x86_64-w64-mingw32/lib" -lmingw32 -L/mingw64/bin -lSDL_bgi -lSDL2_ttf -lSDL2_mixer -lSDL2_image -lSDL2main -lSDL2
 INCS     = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"SDL2-2.24.2/x86_64-w64-mingw32/include" -I"SDL2-2.24.2/x86_64-w64-mingw32/include/SDL2" -I"SDL_bgi-2.6.0/src" -I"SDL2_mixer-2.6.2/x86_64-w64-mingw32/include" -I"SDL2_image-2.6.2/x86_64-w64-mingw32/include" -I"SDL2_ttf-2.20.1/x86_64-w64-mingw32/include"
 CXXINCS  = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++" -I"C:/Users/Pro/Desktop/GeometryEscape/SDL2_ttf-2.20.1/x86_64-w64-mingw32/include/SDL2" -I"C:/Users/Pro/Desktop/GeometryEscape/SDL2_image-2.6.2/x86_64-w64-mingw32/include/SDL2" -I"C:/Users/Pro/Desktop/GeometryEscape/SDL2_mixer-2.6.2/x86_64-w64-mingw32/include/SDL2" -I"SDL2-2.24.2/x86_64-w64-mingw32/include" -I"SDL2-2.24.2/x86_64-w64-mingw32/include/SDL2" -I"SDL_bgi-2.6.0/src" -I"SDL2_mixer-2.6.2/x86_64-w64-mingw32/include" -I"SDL2_image-2.6.2/x86_64-w64-mingw32/include" -I"SDL2_ttf-2.20.1/x86_64-w64-mingw32/include"
@@ -24,26 +24,29 @@ clean: clean-custom
 $(BIN): $(OBJ)
 	$(CPP) $(LINKOBJ) -o $(BIN) $(LIBS)
 
-39_tiling/Block.o: 39_tiling/Block.cpp
-	$(CPP) -c 39_tiling/Block.cpp -o 39_tiling/Block.o $(CXXFLAGS)
+Game_code/Block.o: Game_code/Block.cpp
+	$(CPP) -c Game_code/Block.cpp -o Game_code/Block.o $(CXXFLAGS)
 
-39_tiling/function.o: 39_tiling/function.cpp
-	$(CPP) -c 39_tiling/function.cpp -o 39_tiling/function.o $(CXXFLAGS)
+Game_code/Constant.o: Game_code/Constant.cpp
+	$(CPP) -c Game_code/Constant.cpp -o Game_code/Constant.o $(CXXFLAGS)
 
-39_tiling/Game.o: 39_tiling/Game.cpp
-	$(CPP) -c 39_tiling/Game.cpp -o 39_tiling/Game.o $(CXXFLAGS)
+Game_code/function.o: Game_code/function.cpp
+	$(CPP) -c Game_code/function.cpp -o Game_code/function.o $(CXXFLAGS)
 
-39_tiling/Game_main.o: 39_tiling/Game_main.cpp
-	$(CPP) -c 39_tiling/Game_main.cpp -o 39_tiling/Game_main.o $(CXXFLAGS)
+Game_code/Game.o: Game_code/Game.cpp
+	$(CPP) -c Game_code/Game.cpp -o Game_code/Game.o $(CXXFLAGS)
 
-39_tiling/LTexture.o: 39_tiling/LTexture.cpp
-	$(CPP) -c 39_tiling/LTexture.cpp -o 39_tiling/LTexture.o $(CXXFLAGS)
+Game_code/Game_main.o: Game_code/Game_main.cpp
+	$(CPP) -c Game_code/Game_main.cpp -o Game_code/Game_main.o $(CXXFLAGS)
 
-39_tiling/Menu.o: 39_tiling/Menu.cpp
-	$(CPP) -c 39_tiling/Menu.cpp -o 39_tiling/Menu.o $(CXXFLAGS)
+Game_code/LTexture.o: Game_code/LTexture.cpp
+	$(CPP) -c Game_code/LTexture.cpp -o Game_code/LTexture.o $(CXXFLAGS)
 
-39_tiling/Square.o: 39_tiling/Square.cpp
-	$(CPP) -c 39_tiling/Square.cpp -o 39_tiling/Square.o $(CXXFLAGS)
+Game_code/Menu.o: Game_code/Menu.cpp
+	$(CPP) -c Game_code/Menu.cpp -o Game_code/Menu.o $(CXXFLAGS)
 
-39_tiling/Obstacle.o: 39_tiling/Obstacle.cpp
-	$(CPP) -c 39_tiling/Obstacle.cpp -o 39_tiling/Obstacle.o $(CXXFLAGS)
+Game_code/Obstacle.o: Game_code/Obstacle.cpp
+	$(CPP) -c Game_code/Obstacle.cpp -o Game_code/Obstacle.o $(CXXFLAGS)
+
+Game_code/Square.o: Game_code/Square.cpp
+	$(CPP) -c Game_code/Square.cpp -o Game_code/Square.o $(CXXFLAGS)

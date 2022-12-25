@@ -1,13 +1,16 @@
-#include "initial_background.h"
+#include "Menu.h"
 
-const int SCREEN_WIDTH = 960;
-const int SCREEN_HEIGHT = 600;
+//The window renderer
+extern SDL_Renderer* gRenderer;
 
 bool start = false;
 
-bool Screen_control::loadMusic() {
+Screen_control::Screen_control(){}
+
+bool Screen_control::loadMusic() 
+{
     bool success = true;
-    gMusic = Mix_LoadMUS( "/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/music/dark_xfile.mp3" );
+    gMusic = Mix_LoadMUS( "Game_src/music/dark_xfile.mp3" );
     if( gMusic == NULL )
     {
         printf( "Failed to load beat music! SDL_mixer Error: \n", Mix_GetError() );
@@ -15,9 +18,10 @@ bool Screen_control::loadMusic() {
     }
     return success;
 }
-bool Screen_control::loadChunk() {
+bool Screen_control::loadChunk() 
+{
     bool success = true;
-    gChunk = Mix_LoadWAV( "/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/music/button-chunk.mp3" );
+    gChunk = Mix_LoadWAV( "Game_src/music/button-chunk.mp3" );
     if( gChunk == NULL )
     {
         printf( "Failed to load chunk! SDL_mixer Error: \n", Mix_GetError() );
@@ -28,35 +32,65 @@ bool Screen_control::loadChunk() {
 
 bool Screen_control::init()
 {
-    bool success = true;
+    // Wei
+	//Initialization flag
+    bool success = true; 
+    
+    //Initialize SDL
     if (SDL_Init(SDL_INIT_VIDEO| SDL_INIT_AUDIO) < 0)
     {
-        cout << "SDL failed to initialize, SDL_error= " << SDL_GetError() << endl;
+        std::cout << "SDL failed to initialize, SDL_error= " << SDL_GetError() << std::endl;
         success = false;
     }
     else
     {
+    	// Wei
+    	//Create window
         gWindow = SDL_CreateWindow("Geometry Escape",SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,SCREEN_WIDTH,SCREEN_HEIGHT,SDL_WINDOW_SHOWN);
         if(gWindow == NULL)
         {
-            cout << "Failed to create Window, SDL_error: " << SDL_GetError() << endl;
+            std::cout << "Failed to create Window, SDL_error: " << SDL_GetError() << std::endl;
             success = false;
         }
         else
         {
+        	// Chen
+			//Initialize renderer color
+			SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
+        	
+        	// Wei
+        	//Initialize PNG loading
             int imgFlags = IMG_INIT_JPG;
             if( !( IMG_Init( imgFlags ) & imgFlags ) )
             {
-                cout << "SDL_image could not initialize! SDL_image Error: \n" <<  IMG_GetError();
+                std::cout << "SDL_image could not initialize! SDL_image Error: \n" <<  IMG_GetError();
                 success = false;
             }
             else
             {
+            	// Wei
                 gScreenSurface = SDL_GetWindowSurface( gWindow );
+                
+                // Chen
+                //Create renderer for window
+                gRenderer = SDL_CreateRenderer( gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
+				if( gRenderer == NULL )
+				{
+					printf( "Renderer could not be created! SDL Error: %s\n", SDL_GetError() );
+					success = false;
+				}
+				else
+				{
+					gScreenSurface = SDL_GetWindowSurface( gWindow );
+					//Initialize renderer color
+					SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
+	
+				}
             }
+            // Wei
             if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 )
             {
-                cout << "SDL_mixer could not initialize! SDL_mixer Error: \n" << Mix_GetError() ;
+                std::cout << "SDL_mixer could not initialize! SDL_mixer Error: \n" << Mix_GetError() ;
                 success = false;
             }
             else
@@ -64,7 +98,8 @@ bool Screen_control::init()
                 loadMusic();
                 loadChunk();
             }
-        }
+        }       
+        
     }
     return success;
 }
@@ -91,9 +126,9 @@ SDL_Surface* Screen_control::loadSurface (std::string path)
 
 void Screen_control::SetPath()
 {
-    gBackground = loadSurface("/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/menu/background.jpg");
-    gTitle = loadSurface("/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/menu/picture-font.jpg");
-    gButtonboard = loadSurface("/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/menu/picture-board.jpg");
+    gBackground = loadSurface("Game_src/menu/background.jpg");
+    gTitle = loadSurface("Game_src/menu/picture-font.jpg");
+    gButtonboard = loadSurface("Game_src/menu/picture-board.jpg");
 }
 
 void Screen_control::SetPosition()
@@ -143,13 +178,13 @@ void Screen_control::close()
 
 Set_Buttons::Set_Buttons()
 {
-    gButtons=new SDL_Surface* [TOTAL_BUTTONS];
-    for(int i=0;i<TOTAL_BUTTONS;i++)
+    gButtons=new SDL_Surface* [5];
+    for(int i=0;i<5;i++)
     {
         gButtons[i] = NULL;
     }
-    colored_gButtons=new SDL_Surface* [TOTAL_BUTTONS];
-    for(int i=0;i<TOTAL_BUTTONS;i++)
+    colored_gButtons=new SDL_Surface* [5];
+    for(int i=0;i<5;i++)
     {
         colored_gButtons[i] = NULL;
     }
@@ -169,17 +204,17 @@ void Set_Buttons::SetPosition()
 }
 void Set_Buttons::SetPath()
 {
-    const char* button_path[5]={"/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/menu/button-run.jpg",
-                           "/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/menu/button-settings.jpg",
-                           "/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/menu/button-statistic.jpg",
-                           "/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/menu/button-rule.jpg",
-                           "/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/menu/picture-best.jpg"};
+    const char* button_path[5]={"Game_src/menu/button-run.jpg",
+                           "Game_src/menu/button-settings.jpg",
+                           "Game_src/menu/button-statistic.jpg",
+                           "Game_src/menu/button-rule.jpg",
+                           "Game_src/menu/picture-best.jpg"};
 
-    const char* colored_button_path[5]={"/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/menu/button-run1.jpg",
-                                "/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/menu/button-settings1.jpg",
-                                "/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/menu/button-statistic1.jpg",
-                                "/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/menu/button-rule1.jpg",
-                                "/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/menu/picture-best.jpg"};
+    const char* colored_button_path[5]={"Game_src/menu/button-run1.jpg",
+                                "Game_src/menu/button-settings1.jpg",
+                                "Game_src/menu/button-statistic1.jpg",
+                                "Game_src/menu/button-rule1.jpg",
+                                "Game_src/menu/picture-best.jpg"};
 
     for(int i=0;i<5;i++)
     {
@@ -253,11 +288,11 @@ bool Button_Event::react_1(SDL_Event& e)
     SDL_Rect back_dstrect;
     SDL_Rect onoff_dstrect;
 
-    reactSur = loadSurface("/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/scene/setting-scene.jpg");
-    back = loadSurface("/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/scene/back.jpg");
-    colored_back = loadSurface("/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/scene/back1.jpg");
-    on = loadSurface("/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/scene/on-button.jpg");
-    off = loadSurface("/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/scene/off-button.jpg");
+    reactSur = loadSurface("Game_src/scene/setting-scene.jpg");
+    back = loadSurface("Game_src/scene/back.jpg");
+    colored_back = loadSurface("Game_src/scene/back1.jpg");
+    on = loadSurface("Game_src/scene/on-button.jpg");
+    off = loadSurface("Game_src/scene/off-button.jpg");
     back_dstrect.x =800;
     back_dstrect.y =500;
     onoff_dstrect.x =800;
@@ -380,9 +415,9 @@ bool Button_Event::react_2(SDL_Event& e)
     SDL_Surface* colored_back = NULL;
     SDL_Rect back_dstrect;
 
-    reactSur = loadSurface("/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/scene/statistics-scene.jpg");
-    back = loadSurface("/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/scene/back.jpg");
-    colored_back = loadSurface("/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/scene/back1.jpg");
+    reactSur = loadSurface("Game_src/scene/statistics-scene.jpg");
+    back = loadSurface("Game_src/scene/back.jpg");
+    colored_back = loadSurface("Game_src/scene/back1.jpg");
     back_dstrect.x =780;
     back_dstrect.y =50;
     SDL_BlitSurface( reactSur, NULL, gScreenSurface, NULL );
@@ -468,9 +503,9 @@ bool Button_Event::react_3(SDL_Event& e)
     SDL_Surface* colored_back = NULL;
     SDL_Rect back_dstrect;
 
-    reactSur = loadSurface("/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/scene/rule-scene.jpg");
-    back = loadSurface("/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/scene/back.jpg");
-    colored_back = loadSurface("/Users/lucaswei/CLionProjects/sdl_test1/geometry_escape/scene/back1.jpg");
+    reactSur = loadSurface("Game_src/scene/rule-scene.jpg");
+    back = loadSurface("Game_src/scene/back.jpg");
+    colored_back = loadSurface("Game_src/scene/back1.jpg");
     back_dstrect.x =800;
     back_dstrect.y =500;
     SDL_BlitSurface( reactSur, NULL, gScreenSurface, NULL );
@@ -546,9 +581,9 @@ bool Button_Event::react_3(SDL_Event& e)
     return true;
 
 }
-void demo::process()
+bool DemoMenu::process()
 {
-    init();
+    Screen_control::init();
     Set_Buttons();
     Screen_control::SetPath();
     Screen_control::SetPosition();
@@ -561,7 +596,7 @@ void demo::process()
     SDL_Event e;
     bool quit = false;
     bool ifchunk[4] = {true};
-    while( quit == false )
+    while((!start) && (!quit)) // not start yet and not quit
     {
         while( SDL_PollEvent( &e ) )
         {
@@ -604,17 +639,9 @@ void demo::process()
                             break;
                         default:break;
                     }
-                    if(ret) return;
                 }
             }
         }
     }
-    close();
+	return start; 
 }
-
-
-
-
-
-
-

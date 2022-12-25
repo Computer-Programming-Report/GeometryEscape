@@ -20,7 +20,7 @@ bool setBlocks( Block* blocks[] )
     int x = 0, y = 0;
 
     //Open the map
-    std::ifstream map( "39_tiling/lazy2.map" );
+    std::ifstream map( "Game_code/block.map" );
 
     //If the map couldn't be loaded
     if( map.fail() )
@@ -159,14 +159,14 @@ bool loadMedia( Block* blocks[] )
 	bool success = true;
 
 	//Load square texture
-	if( !gSquareTexture.loadFromFile( "39_tiling/square-1.jpg" ) )
+	if( !gSquareTexture.loadFromFile( "Game_code/picture/square-1.jpg" ) )
 	{
 		printf( "Failed to load square texture!\n" );
 		success = false;
 	}
 
 	//Load block texture
-	if( !gBlockTexture.loadFromFile( "39_tiling/block_spike_lava.png" ) )
+	if( !gBlockTexture.loadFromFile( "Game_code/picture/block_spike_lava.png" ) )
 	{
 		printf( "Failed to load block set texture!\n" );
 		success = false;
@@ -180,14 +180,14 @@ bool loadMedia( Block* blocks[] )
 	}
 	
 	//Load Prof_H
-	if( !gProTexture.loadFromFile( "39_tiling/Prof_H3.png" ) )
+	if( !gProTexture.loadFromFile( "Game_code/picture/Prof_H.png" ) )
 	{
 		printf( "Failed to load block set texture!\n" );
 		success = false;
 	}
 	
 	//Load Springer
-	if( !gSpringerTexture.loadFromFile( "39_tiling/springer.png" ) )
+	if( !gSpringerTexture.loadFromFile( "Game_code/picture/springer.png" ) )
 	{
 		printf( "Failed to load block set texture!\n" );
 		success = false;
@@ -201,7 +201,7 @@ bool loadMediaRight()
 	bool success = true;
 
 	//Load square texture
-	if(!gSquareTexture.loadFromFile( "39_tiling/square-1.jpg" ) )
+	if(!gSquareTexture.loadFromFile( "Game_code/picture/square-1.jpg" ) )
 	{
 		printf( "Failed to load square texture!\n" );
 		success = false;
@@ -216,7 +216,7 @@ bool loadMediaLeft()
 	bool success = true;
 
 	//Load square texture
-	if(!gSquareTexture.loadFromFile( "39_tiling/square-2.jpg" ) )
+	if(!gSquareTexture.loadFromFile( "Game_code/picture/square-2.jpg" ) )
 	{
 		printf( "Failed to load square texture!\n" );
 		success = false;
@@ -231,7 +231,7 @@ bool loadMediaTouchWall()
 	bool success = true;
 
 	//Load square texture
-	if(!gSquareTexture.loadFromFile( "39_tiling/square-3.jpg" ) )
+	if(!gSquareTexture.loadFromFile( "Game_code/picture/square-3.jpg" ) )
 	{
 		printf( "Failed to load square texture!\n" );
 		success = false;
