@@ -104,11 +104,8 @@ void DemoGame::process_game(bool gstart)
 		}
 		ps.checkdeath(death);
 	}
-<<<<<<< HEAD
-//	return gstart;
     
-=======
->>>>>>> 7a2e892 (m)
+
 	//Free resources and close SDL
 	close( blockSet );
 }
